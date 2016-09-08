@@ -1,4 +1,4 @@
-class Day(object):
+class Day():
 
 	def __init__(self, month, weekday, date, details):
 		self.month = month
@@ -10,14 +10,14 @@ class Day(object):
 		self.details.append(detail)
 		return True #when would it be false?
 		
-	def editDetails(self, remove, idx)
+	def editDetails(self, remove, idx):
 		if remove:
 			if idx < details.len():
 				del details[idx]
 				return True
-			else
+			else:
 				return False
 				
-		else
+		#else
 			#clarification on what to do?
 			
