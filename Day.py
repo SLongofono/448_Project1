@@ -5,19 +5,27 @@ class Day():
 		self.weekday = weekday
 		self.date = date
 		self.details = details
-		
-	def addDetails(self, detail):
+
+	def addDetail(self, detail):
 		self.details.append(detail)
 		return True #when would it be false?
-		
-	def editDetails(self, remove, idx):
-		if remove:
-			if idx < details.len():
-				del details[idx]
-				return True
-			else:
-				return False
-				
-		#else
-			#clarification on what to do?
-			
+
+	def editDetail(self, idx, detail):
+		if idx < len(details) and idx >= -1*len(details):
+			self.details[idx] = detail
+			return True
+		else:
+			return False
+
+	def removeDetail(self, idx):
+		if idx < len(details) and idx >= -1*len(details):
+			del self.details[idx]
+			return True
+		else:
+			return False
+
+	def getMonth(self):
+		return self.month
+
+	def getDate(self):
+		return self.date

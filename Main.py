@@ -1,4 +1,6 @@
-import Day
+from Year import Year
+from Day import Day
 
-testDay = Day.Day(9, "Wednesday", 7, "worked on python")
-print (str(testDay.month) + "/" + str(testDay.date))
+testYear = Year(2016, 5)
+testDay = testYear.months[8].days[9]
+print (str(testDay.month) + "/" + str(testDay.date) + ", " + testDay.weekday)

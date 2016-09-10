@@ -1,36 +1,57 @@
-import Day
+from Day import Day
 
 class Month():
-	
-	def __init__(self, name, numDays, pastMonth, nextMonth, year):
+
+	def __init__(self, name, days, year):
 		self.name = name
-		self.pastMonth = pastMonth
-		self.nextMonth = nextMonth
+		self.days = days
+		self.numDays = len(days)
 		self.year = year
-		
-		for i in range(numDays - 1):
-			days[i] = Day(self, WEEKDAY, i+1, None)
-			
+
 		#generate weeks
-		
-		
-	def makeWeek(self, startDay):
-		currentMonth = startDay.Month
-		currentDate = startDay.date
-		
-		for i in range(6):
-			if currentDate > currentMonth.numDays:
-				currentMonth = currentMonth.nextMonth
-				currentDate = 1
-				
-			week[i] = currentMonth.getDay(currentDate-1)
-			currentDate++
-		
-		return week #scope problem?
-		
-		
+		self.weeks = [[]]
+		for day in self.days:
+			if day.weekday == 'Sunday':
+				self.weeks.append([])
+
+			self.weeks[-1].append(day)
+
+
+	def setPrev(self, month):
+		self.prev = month
+
+		try:
+			i = self.prev.numDays - 1
+			while self.weeks[0][0].weekday != 'Sunday':
+				self.weeks[0].insert(0, self.prev.days[i])
+				i -= 1
+			return True
+		except IndexError:
+			return False
+
+	def getPrev(self):
+		return self.prev
+
+	def setNext(self, month):
+		self.next = month
+
+		try:
+			i = 0
+			while self.weeks[-1][-1].weekday != 'Saturday':
+				self.weeks[-1].append(self.next.days[i])
+				i += 1
+			return True
+		except IndexError:
+			return False
+
+	def getNext(self):
+		return next
+
+	def getNumDays(self):
+		return self.numDays
+
 	def getDay(self, day):
-		return days[day]
-	
+		return self.days[day]
+
 	def getWeek(self, idx):
-		return weeks[idx]
+		return self.weeks[idx]
