@@ -8,7 +8,6 @@ class Day():
 
 	def addDetail(self, detail):
 		self.details.append(detail)
-		return True #when would it be false?
 
 	def editDetail(self, idx, detail):
 		if idx < len(details) and idx >= -1*len(details):
@@ -23,9 +22,3 @@ class Day():
 			return True
 		else:
 			return False
-
-	def getMonth(self):
-		return self.month
-
-	def getDate(self):
-		return self.date
