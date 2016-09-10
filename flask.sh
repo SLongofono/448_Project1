@@ -1,3 +1,4 @@
+## @package flask.sh
 # This is a short script written to verify that the dependencies of our project are present.
 # Our project makes use of virtualenv, python, Flask, and several Flask extensions.  This script
 # assumes that python and virtualenv are installed and in the system path.  You may omit the commands
