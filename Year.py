@@ -3,7 +3,7 @@ from Day import Day
 
 class Year():
 
-	def __init__(self, name, weekOffset): #could just include flag for leap
+	def __init__(self, name):
 		self.name = name
 		self.months = []
 		#self.firstDay = firstDay
@@ -16,6 +16,10 @@ class Year():
 			monthLengths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 		else:
 			monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+		y = name % 100
+		c = name // 100
+		weekOffset = int((1.4 + name + y/4 + c/4 - 2*c)%7)
 
 		dayCount = 0
 		for i in range(12):

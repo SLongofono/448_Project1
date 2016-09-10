@@ -1,6 +1,6 @@
 from Year import Year
 
-testYear = Year(2016, 5)
+testYear = Year(2016) #5
 testMonth = testYear.months[8]
 testDay = testMonth.days[9]
 
