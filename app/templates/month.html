@@ -1,0 +1,9 @@
+{% extends 'base.html' %} # use the base template as a parent
+{% block mainBody %}
+	{% if user %}
+	<h1>Welcome, {{user.name}}!</h1>
+	{% else %}
+	<h1>Welcome to the site!</h1>
+	{% endif %}
+{% endblock %}
+{% block dateTime %} {{timestamp}} {% endblock %}

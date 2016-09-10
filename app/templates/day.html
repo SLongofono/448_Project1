@@ -1,0 +1,21 @@
+{% extends 'base.html' %} # use the base template as a parent
+{% block mainBody %}
+	<!-- Verify that we have a calendar -->
+	{% if calendar %}
+	<h1>Welcome, {{user}}!</h1>
+	<p>Calendar details: </p>
+	<p>Year:
+		{{calendar['name']}}
+	</p>
+	<p>Months:
+		{{calendar['months']}}
+	</p>
+	<p>Current display mode:
+		{{calendar['displayMode']}}
+	</p>
+	{% else %}
+	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
+	<a href={{url_for('login')}}>Login Page</a>
+	{% endif %}
+
+{% endblock %}

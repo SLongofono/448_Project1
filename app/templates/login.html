@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block mainBody %}
+	<h1>Log in</h1>
+	<form action='' method='post' name='login'>
+	{{form.hidden_tag()}}
+	<p>Enter your username:<br>{{form.uname}}<br>
+	{% for err in form.uname.errors %}
+		<span style='color:red;'>{ {error} }</span>
+	{% endfor %}
+	</p>
+	<p>Enter your password:<br>{{form.pword}}<br>
+	</p>
+	<p>
+	<input type='submit' value='Go'>
+	</p>
+	</form>
+{% endblock %}
