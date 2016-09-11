@@ -17,9 +17,7 @@
 # via JSON.
 #
 
-from app import app
-import Year
-
+from app import app			#import our configured app from upstream
 from flask import render_template	#ability to use jinja2 templates
 from flask import flash			#ability to pass consumeable text content
 from flask import redirect		#ability to override browser address request
@@ -27,7 +25,10 @@ from flask import session		#cookies to track the calendar for session
 from flask import url_for		#let flask manage urls, we use function names
 from forms import LoginForm		#import custom definition defined in forms.py
 from forms import DateForm		#import custom date form
-import datetime
+from flask import request		#Allow access to HTTP requests
+from flask import json			#Prepare responses to requests for client
+from flask import logging		#Developer feedback
+from jinja2.ext import autoescape #sanitize on client-side
 
 ## @fn index
 # @brief root domain request behavior
@@ -51,6 +52,14 @@ def index():
 			# Instantiate a calendar object
 			#session['calendar'] = init_calendar()
 			calendar = {}
+			calendar['currentDay'] = {}
+			calendar['currentDay']['day'] = 'Saturday'
+			calendar['currentDay']['date'] = '10'
+			calendar['currentDay']['month'] = 'September'
+			calendar['currentDay']['details'] = []
+			calendar['currentDay']['details'].append('No class: EECS448')
+			calendar['currentDay']['details'].append('EECS645 Homework due')
+			calendar['currentDay']['details'].append('Go see the dude about the thing')
 			calendar['name'] = '2016'
 			calendar['months'] = []
 			calendar['months'].append('january')
@@ -122,3 +131,26 @@ def login():
 def logout():
 	session.clear()
 	return redirect(url_for('login'))
+
+@app.route('/process', methods=['POST'])
+def process():
+	for a,b in request.form.iteritems():
+		app.logger.info(a + ': ' + b)
+
+	found = True
+	#Find the day and update
+
+	if not found:
+		return json.dumps({'status':'BAD'})
+
+	return json.dumps({'status':'OK'})
+
+@app.route('/viewChange', methods=['POST'])
+def viewChange():
+	if request.form['view'] == 'next':
+		session['calendar']['currentDay'] = session['calendar']['currentDay'].getNext()
+	elif request.form['view'] == 'prev':
+		session['calendar']['currentDay'] = session['calendar']['currentDay'].getPrev()
+	else:
+		session['calendar']['displayMode'] = request.form['view']
+	return json.dumps('OK')

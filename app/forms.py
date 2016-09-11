@@ -40,8 +40,8 @@ dateRegx = '^' + dayRegx + delimRegx + monthRegx + delimRegx + yearRegx
 # how they are validated.
 #
 class LoginForm(Form): #custom class inherits from wtf.Form
-	uname = StringField('uname', validators=[Required()], message='Please enter your username')
-	pword = StringField('pword', validators=[Required()], message='Please enter your password')
+	uname = StringField('uname', validators=[Required()])
+	pword = StringField('pword', validators=[Required()])
 
 ## @class DateForm
 # @brief Form which validates a string is in date format, mm/dd/yyyy or mm-dd-yyyy
@@ -52,3 +52,7 @@ class LoginForm(Form): #custom class inherits from wtf.Form
 #
 class DateForm(Form):
 	date = StringField('date', validators=[Required(), Regexp(dateRegx, message='Please enter a date of the form mm/dd/yyyy')])
+
+class DetailForm(Form):
+	detail = StringField('detail')
+	

@@ -3,19 +3,234 @@
 	<!-- Verify that we have a calendar -->
 	{% if calendar %}
 	<h1>Welcome, {{user}}!</h1>
-	<p>Calendar details: </p>
-	<p>Year:
-		{{calendar['name']}}
-	</p>
-	<p>Months:
-		{{calendar['months']}}
-	</p>
-	<p>Current display mode:
-		{{calendar['displayMode']}}
+	<p>
+		Today's details:<br>
+		{{calendar['currentDay']['day']}}, {{calendar['currentDay']['month']}} {{calendar['currentDay']['date']}}, {{calendar['name']}}<br>
+		<ul>
+		{% for item in calendar['currentDay']['details'] %}
+		<div id="detailDiv{{loop.index}}">
+			<li>{{item}}</li><br>
+				<button class="btn" type="button" id="delete" num="{{loop.index}}"
+				        data="{{item}}" value="Delete">Delete</button>
+				<button class="btn" type="button" id="edit"   num="{{loop.index}}"
+				        data="{{item}}" value="Edit">Edit</button>
+				<input  type="text" style="visibility:hidden" id="input" num="{{loop.index}}"
+				        data="{{item}}" value="{{item}}"></input>
+				<button class="btn" type="button" style="visibility:hidden" id="save" num="{{loop.index}}"
+				        data="{{item}}" value="Save">Save</button>
+
+		</div>
+		{% endfor %}
+		</ul>
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
 	<a href={{url_for('login')}}>Login Page</a>
 	{% endif %}
+	<p id='comsField'></p>
+	<br><br>
+	<div class="container" id="viewChange">
+		<button class='btn' type="button" id="prev">Yesterday</button>
+		<button class='btn' type="button" id="next">Tomorrow</button>
+		<hr>
+		<button class='btn' type="button" id="week">Week View</button>
+		<button class='btn' type="button" id="month">Month View</button>
+	    <button class='btn' type="button" id="year">Year View</button>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script>
+currentDay = dayBuilder();
 
+//Test labels
+console.log(serialize(currentDay.labels, currentDay.stats));
+
+// Button handler for views
+$(function(){
+	$('#viewChange').find('*').click(function(){
+		var payload = 'view=' + $(this).attr("id");
+		$.ajax({
+			url: 	 '/viewChange',
+			data:    payload,
+			type: 	 'POST',
+			success: function(reply){
+				// Once the server has confirmed a change, redirect
+				if (reply.indexOf('OK') >= 0){
+					console.log("Changed view successfully");
+					window.location.replace("http://localhost:5000/");
+				}
+			}
+		});// End ajax
+	});
+});
+
+// Button handler for details
+$(function(){
+	$("[value]").click(function(){
+		var div_pattern = "#detailDiv" + $(this).attr("num")
+		var delete_btn = $(div_pattern).find('#delete')
+		var edit_btn = $(div_pattern).find('#edit')
+		var save_btn = $(div_pattern).find('#save')
+		var input_btn = $(div_pattern).find('#input')
+		var orig_detail = $(div_pattern).find('li')
+
+		// Case delete button
+		if($(this).attr("id") == "delete"){
+			// Update the local day object
+			modifyDetail(currentDay, $(this).attr("data"), "", true);
+
+			// Send changes to server
+			saveChanges(currentDay);
+
+			// Hide this detail completely
+			$(div_pattern).css('visibility', 'hidden');
+
+			// Hide input/save in case it was visible
+			input_btn.css('visibility', 'hidden');
+			save_btn.css('visibility', 'hidden')
+		}
+
+		//Case edit button
+		else if($(this).attr("id") == "edit"){
+			// Find the input field and save button for this and make visible
+			input_btn.css('visibility', 'visible')
+			save_btn.css('visibility', 'visible')
+		}
+
+		//Case Save button
+		else if($(this).attr("id") == "save"){
+			// Fetch new detail for this detail id number
+			var newDetail = sanitize(input_btn.val());
+
+			if (newDetail.length <= 0){
+				failMessage('No valid detail text.  Use the delete button to remove a detail');
+				input_btn.val($(this).attr("data"));
+				return;
+			}
+			console.log("Saving new detail: " + newDetail);
+
+			// Update the local day object
+			modifyDetail(currentDay, $(this).attr("data"), newDetail, false);
+
+			// Update all of this detail's buttons with the new detail text
+			$(div_pattern).find('*').attr("data", newDetail);
+
+			// Update original template value
+			orig_detail.text(newDetail);
+
+			// Hide the input and save button again
+			input_btn.css('visibility', 'hidden')
+			save_btn.css('visibility', 'hidden')
+
+			// Send changes to server
+			saveChanges(currentDay);
+		}
+		return;
+	});
+});
+
+// Modify detail function
+function modifyDetail(day, oldDetail, newDetail, deleteFlag){
+	console.log(currentDay);
+	// Locate detail
+	// start at index 4 so expected values are never changed
+	for(var i = 4; i<day.stats.length; i++){
+		if (day.stats[i].indexOf(oldDetail) >= 0){
+			if(deleteFlag){
+				console.log('Removing detail: ' + oldDetail);
+				// Remove the detail and the corresponding label
+				day.stats.splice(i,1);
+				day.labels.splice(i,1);
+				console.log('done');
+			}
+			else{
+				// Replace the value.  Leave the label unchanged.
+				console.log("Changing detail");
+				day.stats[i] = newDetail;
+				console.log("Detail changed to " + newDetail);
+			}
+			break;
+		}
+	}
+	return;
+}
+
+function dayBuilder(){
+	// Rebuild local copies of the current day for client-side use
+	this_day = {};
+	this_day.stats = ['{{calendar['currentDay']['day']}}','{{calendar['currentDay']['date']}}','{{calendar['currentDay']['month']}}', '{{calendar['name']}}'];
+	//Labels for day stats
+	this_day.labels = ['day','date','month','year'];
+
+	// Build list of details associated with integers
+	var count = 0;
+	{% for detail in calendar['currentDay']['details'] %}
+		this_day.stats.push('{{detail}}');
+		this_day.labels.push('detail' + count)
+		count++;
+	{% endfor %}
+
+	return this_day;
+}
+
+function failMessage(msg){
+	$('#comsField').css('color', 'red');
+	$('#comsField').text(msg);
+}
+
+function saveChanges(currentDay){
+	// Send out an ajax call and assign callbacks to the reply
+	console.log(serialize(currentDay.labels, currentDay.stats));
+	$.ajax({
+		url: 	 '/process',
+		data:    serialize(currentDay.labels, currentDay.stats),
+		type: 	 'POST',
+		success: function(reply){
+					console.log(reply);
+					if(reply.indexOf('BAD') >= 0){
+						failMessage('Failed to communicate with the server, please try again later.');
+					}
+					else{
+						successMessage('Your changes were saved!');
+						console.log('OK');
+					}
+				 },
+		error: 	 function(reply){
+					console.log(reply);
+					failMessage('Failed to communicate with the server, please try again later.');
+				 }
+	});// End ajax
+} // End saveChanges
+
+// This function was taken from a stackexchange post, which is kind of
+// ridiculous considering JavaScript is a web language.  It should be built in..
+// Retrieved September 2016
+// http://stackoverflow.com/questions/16171320/remove-all-slashes-in-javascript#16171353
+function sanitize(word){
+	console.log(word);
+	result = word.replace(/\\/g, '');
+	result = result.replace(/\/\//g, '');
+	result = result.replace(/\&/g, '');
+	result = result.replace(/%/g, '');
+	result = result.replace(/\$/g, '');
+	result = result.replace(/#/g, '');
+	console.log(result);
+	return result;
+}
+
+function serialize(names,vals){
+	equals = '=';
+	delimiter = '&';
+	result = Array();
+	for(var i = 0; i < vals.length; i++){
+		result.push(names[i] + equals + vals[i])
+	}
+	return result.join(delimiter)
+}
+
+function successMessage(msg){
+	$('#comsField').css('color', 'green');
+	$('#comsField').text(msg);
+}
+
+</script>
 {% endblock %}
