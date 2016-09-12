@@ -54,9 +54,13 @@ $(function(){
 			type: 	 'POST',
 			success: function(reply){
 				// Once the server has confirmed a change, redirect
-				if (reply.indexOf('OK') >= 0){
+				// Parse the JSON into an object
+				payload = JSON.parse(reply);
+				if (payload.status == 'OK'){
 					console.log("Changed view successfully");
-					window.location.replace("http://localhost:5000/");
+					// redirect, cueing the server to display the updated view
+					window.location.replace(payload.link);
+					//window.location.replace("http://localhost:5000/");
 				}
 			}
 		});// End ajax
