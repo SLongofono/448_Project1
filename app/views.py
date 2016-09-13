@@ -44,7 +44,8 @@ from jinja2.ext import autoescape #sanitize on client-side
 #
 @app.route('/')
 @app.route('/index')
-def index():
+@app.route('/index/<string:view>')
+def index(view=None):
 	if 'uname' in session:
 		# if logged in...
 		# Check if we already made a calendar for the user
@@ -66,23 +67,32 @@ def index():
 			calendar['displayMode'] = 'day'
 			session['calendar'] = calendar
 
-			# Render the day template page
+			flash(session['calendar'])
+			# Render the day template page by default
 			return render_template('day.html', calendar=session['calendar'], user=session['uname'])
 
 		else:
-			flash('calendar was found, rendering from main')
 			# We have a calendar, render the appropriate template
-			# for the calendar's display mode
-			if 'day' == session['calendar']['displayMode']:
+			flash(session['calendar'])
+
+			# Give precedence to directly specified view, which should
+			# always match the current displayMode in calendar
+			display = view or session['calendar']['displayMode']
+
+			if 'day' == display:
+				flash('rendering day view')
 				return render_template('day.html', calendar=session['calendar'], user=session['uname'])
 
-			elif 'week' == session['calendar'].displayMode:
-				return render_template('week.html', calendar=session['calendar'])
+			elif 'week' == display:
+				flash('rendering week view')
+				return render_template('week.html', calendar=session['calendar'], user=session['uname'])
 
-			elif 'month' == session['calendar'].displayMode:
-				return render_template('month.html', calendar=session['calendar'])
+			elif 'month' == display:
+				flash('rendering month view')
+				return render_template('month.html', calendar=session['calendar'], user=session['uname'])
 
-			return render_template('year.html', calendar=session['calendar'])
+			flash('rendering year view')
+			return render_template('year.html', calendar=session['calendar'], user=session['uname'])
 
 	# User hasn't logged in yet, provide feedback
 	flash('You must log in to see this page')
@@ -140,6 +150,9 @@ def process():
 	found = True
 	#Find the day and update
 
+	#Update log file
+
+	#return status
 	if not found:
 		return json.dumps({'status':'BAD'})
 
@@ -148,9 +161,26 @@ def process():
 @app.route('/viewChange', methods=['POST'])
 def viewChange():
 	if request.form['view'] == 'next':
+		flash('changing current day to next day')
 		session['calendar']['currentDay'] = session['calendar']['currentDay'].getNext()
+		result = {'status':'OK', 'link':url_for('index')}
 	elif request.form['view'] == 'prev':
+		flash('changing current day to previous day')
 		session['calendar']['currentDay'] = session['calendar']['currentDay'].getPrev()
+		result = {'status':'OK', 'link':url_for('index')}
 	else:
-		session['calendar']['displayMode'] = request.form['view']
-	return json.dumps('OK')
+		flash('changing view to : ' + request.form['view'])
+		print session
+		print session['calendar']
+		if request.form['view'] == 'day':
+			result = {'status':'OK', 'link':url_for('index', view='day')}
+		elif request.form['view'] == 'week':
+			result = {'status':'OK', 'link':url_for('index',view='week')}
+		elif request.form['view'] == 'month':
+			result = {'status':'OK', 'link':url_for('index',view='month')}
+		else:
+			result = {'status':'OK', 'link':url_for('index',view='year')}
+		#session['calendar']['displayMode'] = request.form['view']
+	# Prepare a JSON response with a link for root
+	print 'Returning: ', result
+	return json.dumps(result)

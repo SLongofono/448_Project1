@@ -62,6 +62,10 @@ $(function(){
 					window.location.replace(payload.link);
 					//window.location.replace("http://localhost:5000/");
 				}
+				else{
+					console.log('Bad status: ');
+					console.log(payload);
+				}
 			}
 		});// End ajax
 	});
@@ -189,8 +193,9 @@ function saveChanges(currentDay){
 		data:    serialize(currentDay.labels, currentDay.stats),
 		type: 	 'POST',
 		success: function(reply){
+					payload = JSON.parse(reply)
 					console.log(reply);
-					if(reply.indexOf('BAD') >= 0){
+					if(reply.status == 'BAD'){
 						failMessage('Failed to communicate with the server, please try again later.');
 					}
 					else{
