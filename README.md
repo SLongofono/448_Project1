@@ -9,12 +9,12 @@ Instructions:
   3. Run flask.sh to set up the virtual environment and the directory hierarchy
   4. Create config.py with your parameters in this format: 'PARAM=value'.
     Example contents of config.py:
-    '''
-    DEBUG=True
-    SECRET_KEY='YourSecretKeyHere'
-    USERNAME='YourUserNameHere'
-    PASSWORD='YourPasswordHere'
-    '''
+        
+        DEBUG=True
+        SECRET_KEY='YourSecretKeyHere'
+        USERNAME='YourUserNameHere'
+        PASSWORD='YourPasswordHere'
+        
   5. Move config.py to the flask folder, which should pu it at the same level as the app/ directory
   6. Start the virtual environment: from within the flask folder, type 'source bin/activate'
   7. Start the server: from within the flask folder, type './run.py'
