@@ -1,9 +1,10 @@
 class Day():
 
-	def __init__(self, month, weekday, date, details):
+	def __init__(self, month, weekday, date, year, details):
 		self.month = month
 		self.weekday = weekday
 		self.date = date
+		self.year = year
 		self.details = details
 
 	def addDetail(self, detail):

@@ -17,18 +17,18 @@
 # via JSON.
 #
 
-from app import app			#import our configured app from upstream
+from app import app					#import our configured app from upstream
 from flask import render_template	#ability to use jinja2 templates
-from flask import flash			#ability to pass consumeable text content
-from flask import redirect		#ability to override browser address request
-from flask import session		#cookies to track the calendar for session
-from flask import url_for		#let flask manage urls, we use function names
-from forms import LoginForm		#import custom definition defined in forms.py
-from forms import DateForm		#import custom date form
-from flask import request		#Allow access to HTTP requests
-from flask import json			#Prepare responses to requests for client
-from flask import logging		#Developer feedback
-from jinja2.ext import autoescape #sanitize on client-side
+from flask import flash				#ability to pass consumeable (client-side feedback)
+from flask import redirect			#ability to override browser address request
+from flask import session			#cookies to track the calendar for session
+from flask import url_for			#let flask manage urls, we use function names
+from forms import LoginForm			#import custom definition defined in forms.py
+from forms import DateForm			#import custom date form
+from flask import request			#Allow access to HTTP requests
+from flask import json				#Prepare responses to requests for client
+from flask import logging			#Developer feedback
+import Calendar						#Our calendar class
 
 ## @fn index
 # @brief root domain request behavior
@@ -50,26 +50,24 @@ def index(view=None):
 		# if logged in...
 		# Check if we already made a calendar for the user
 		if not 'calendar' in session:
-			# Instantiate a calendar object
+			# TODO add code to instantiate a calendar object
 			#session['calendar'] = init_calendar()
-			calendar = {}
-			calendar['currentDay'] = {}
-			calendar['currentDay']['day'] = 'Saturday'
-			calendar['currentDay']['date'] = '10'
-			calendar['currentDay']['month'] = 'September'
-			calendar['currentDay']['details'] = []
-			calendar['currentDay']['details'].append('No class: EECS448')
-			calendar['currentDay']['details'].append('EECS645 Homework due')
-			calendar['currentDay']['details'].append('Go see the dude about the thing')
-			calendar['name'] = '2016'
-			calendar['months'] = []
-			calendar['months'].append('january')
-			calendar['displayMode'] = 'day'
+			calendar = Calendar.Calendar('2016', '2017')
+			print calendar.currentDay().weekday
+			print calendar.currentDay().month
+			print calendar.currentDay().date
+			print calendar.currentDay().month.year.name
 			session['calendar'] = calendar
+			session['displayDefault'] = 'day'
 
 			flash(session['calendar'])
 			# Render the day template page by default
-			return render_template('day.html', calendar=session['calendar'], user=session['uname'])
+			return render_template('day.html',
+									weekDay=session['calendar'].currentDay().day,
+									date=session['calendar'].currentDay().date,
+									month=session['calendar'].currentMonth(),
+									year=session['calendar'].currentDay().year,
+									user=session['uname'])
 
 		else:
 			# We have a calendar, render the appropriate template
@@ -77,22 +75,28 @@ def index(view=None):
 
 			# Give precedence to directly specified view, which should
 			# always match the current displayMode in calendar
-			display = view or session['calendar']['displayMode']
+			display = view or session['displayDefault']
 
-			if 'day' == display:
-				flash('rendering day view')
-				return render_template('day.html', calendar=session['calendar'], user=session['uname'])
-
-			elif 'week' == display:
+			if 'week' == display:
 				flash('rendering week view')
-				return render_template('week.html', calendar=session['calendar'], user=session['uname'])
+				return render_template('week.html',
+										week=session['calendar'].getWeek(),
+										user=session['uname'])
 
 			elif 'month' == display:
 				flash('rendering month view')
-				return render_template('month.html', calendar=session['calendar'], user=session['uname'])
+				return render_template('month.html',
+										month=session['calendar'].getMonth().name,
+										days=session['calendar']getMonth().days,
+										user=session['uname'])
 
-			flash('rendering year view')
-			return render_template('year.html', calendar=session['calendar'], user=session['uname'])
+			elif 'year' == display:
+				flash('rendering year view')
+				return render_template('year.html', calendar=session['calendar'], user=session['uname'])
+
+			flash('rendering day view')
+			app.logger.info(session['calendar'])
+			return render_template('day.html', calendar=session['calendar'], user=session['uname'])
 
 	# User hasn't logged in yet, provide feedback
 	flash('You must log in to see this page')
@@ -144,34 +148,47 @@ def logout():
 
 @app.route('/process', methods=['POST'])
 def process():
-	for a,b in request.form.iteritems():
-		app.logger.info(a + ': ' + b)
+	try:
+		# Create a new details list
+		newDetails = []
+		# Add any JSON members with a name that begins with 'detail'
+		for a,b in request.form.iteritems():
+			if a.startsith('detail'):
+				newDetails.append(b)
 
-	found = True
-	#Find the day and update
+		#TODO add code to Update log file
 
-	#Update log file
-
-	#return status
-	if not found:
+	except:
+		# Error state, return bad status
 		return json.dumps({'status':'BAD'})
 
+	# If all is well, replace existing details with new ones and return OK
+	session['calendar'].currentDay().details = newDetails
 	return json.dumps({'status':'OK'})
 
 @app.route('/viewChange', methods=['POST'])
 def viewChange():
+
+	# Case the next day button clicked from day view
 	if request.form['view'] == 'next':
 		flash('changing current day to next day')
-		session['calendar']['currentDay'] = session['calendar']['currentDay'].getNext()
-		result = {'status':'OK', 'link':url_for('index')}
+
+		# Change current day to the following day
+		session['calendar'].currentDay = session['calendar'].currentDay().getNext()
+		result = {'status':'OK', 'link':url_for('index', view='day')}
+
+	# Case the previous day button clicked from day view
 	elif request.form['view'] == 'prev':
 		flash('changing current day to previous day')
-		session['calendar']['currentDay'] = session['calendar']['currentDay'].getPrev()
+
+		# TODO add code to change current day to the next day
+		session['calendar'].currentDay = session['calendar']['currentDay'].getPrev()
 		result = {'status':'OK', 'link':url_for('index')}
+
 	else:
+
 		flash('changing view to : ' + request.form['view'])
-		print session
-		print session['calendar']
+
 		if request.form['view'] == 'day':
 			result = {'status':'OK', 'link':url_for('index', view='day')}
 		elif request.form['view'] == 'week':

@@ -1,13 +1,13 @@
 {% extends 'base.html' %} # use the base template as a parent
 {% block mainBody %}
 	<!-- Verify that we have a calendar -->
-	{% if calendar %}
+	{% if user %}
 	<h1>Welcome, {{user}}!</h1>
 	<p>
 		Today's details:<br>
-		{{calendar['currentDay']['day']}}, {{calendar['currentDay']['month']}} {{calendar['currentDay']['date']}}, {{calendar['name']}}<br>
+		{{calendar.currentDay().weekDay}}, {{calendar.currentDay().month}}, {{calendar.currentDay().date}}, {{calendar.currentMonth().year.name}}<br>
 		<ul>
-		{% for item in calendar['currentDay']['details'] %}
+		{% for item in day.details %}
 		<div id="detailDiv{{loop.index}}">
 			<li>{{item}}</li><br>
 				<button class="btn" type="button" id="delete" num="{{loop.index}}"
@@ -165,13 +165,13 @@ function modifyDetail(day, oldDetail, newDetail, deleteFlag){
 function dayBuilder(){
 	// Rebuild local copies of the current day for client-side use
 	this_day = {};
-	this_day.stats = ['{{calendar['currentDay']['day']}}','{{calendar['currentDay']['date']}}','{{calendar['currentDay']['month']}}', '{{calendar['name']}}'];
+	this_day.stats = [calendar.currentDay().weekday, calendar.currentDay().date, calendar.currentDay().month, calendar.currentDay().month.year.name];
 	//Labels for day stats
 	this_day.labels = ['day','date','month','year'];
 
 	// Build list of details associated with integers
 	var count = 0;
-	{% for detail in calendar['currentDay']['details'] %}
+	{% for detail in calendar.currentDay().details %}
 		this_day.stats.push('{{detail}}');
 		this_day.labels.push('detail' + count)
 		count++;
