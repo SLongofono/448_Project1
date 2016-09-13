@@ -22,3 +22,15 @@ class Day():
 			return True
 		else:
 			return False
+
+	def getPrev(self):
+		if self.date > 1:
+			return self.month.days[date-2]
+		else:
+			return self.month.prev.days[-1]
+
+	def getNext(self):
+		if self.date < len(self.month.days):
+			return self.month.days[date]
+		else:
+			return self.month.next.days[0]
