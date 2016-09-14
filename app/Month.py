@@ -8,6 +8,9 @@ class Month():
 		self.numDays = len(days)
 		self.year = year
 
+		for day in days
+			day.month = self
+
 		self.weeks = [[]]
 		for day in self.days:
 			if day.weekday == 'Sunday':
