@@ -28,7 +28,6 @@ from forms import DateForm		#import custom date form
 from flask import request		#Allow access to HTTP requests
 from flask import json			#Prepare responses to requests for client
 from flask import logging		#Developer feedback
-from jinja2.ext import autoescape #sanitize on client-side
 
 ## @fn index
 # @brief root domain request behavior
@@ -79,20 +78,28 @@ def index(view=None):
 			# always match the current displayMode in calendar
 			display = view or session['calendar']['displayMode']
 
-			if 'day' == display:
-				flash('rendering day view')
-				return render_template('day.html', calendar=session['calendar'], user=session['uname'])
-
-			elif 'week' == display:
+			if 'week' == display:
 				flash('rendering week view')
 				return render_template('week.html', calendar=session['calendar'], user=session['uname'])
+#				daysList = session['calendar'].currentWeek().days
+#				return render_template('week.html', days=daysList, user=session['uname'])
 
 			elif 'month' == display:
 				flash('rendering month view')
+#				daysList = session['calendar'].currentMonth.days
+#				week0 = session[].currentMonth.weeks[0]
+#				week1 = session[].currentMonth.weeks[1]
+#				week2 = session[].currentMonth.weeks[2]
+#				week3 = session[].currentMonth.weeks[3]
+#				return render_template('month.html', days=daysList, week0=week0, week1=week1,week2=week2,week3=week3, user=session['uname'])
 				return render_template('month.html', calendar=session['calendar'], user=session['uname'])
 
+			elif 'year' == display:
+				flash('rendering year view')
+				return render_template('year.html', calendar=session['calendar'], user=session['uname'])
+
 			flash('rendering year view')
-			return render_template('year.html', calendar=session['calendar'], user=session['uname'])
+			return render_template('day.html', calendar=session['calendar'], user=session['uname'])
 
 	# User hasn't logged in yet, provide feedback
 	flash('You must log in to see this page')
@@ -184,3 +191,65 @@ def viewChange():
 	# Prepare a JSON response with a link for root
 	print 'Returning: ', result
 	return json.dumps(result)
+
+@app.route('/changeFocusDay', methods=['POST'])
+def changeFocusDay():
+	day = int(request.form['day'])
+	month = request.form['month']
+	year = int(request.form['year'])
+	# Find the new focus day and update current day, week, month, year
+	session['calendar'].currentMonth = session['calendar'].getMonth(month, year)
+	session['calendar'].currentDay = session['calendar'].getDay(day-1)
+	if session['calendar'].currentMonth.year == session['calendar'].year1.name:
+		session['calendar'].currentYear = session['calendar'].year1
+	else:
+		session['calendar'].currentYear = session['calendar'].year2
+	session['calendar'].currentWeek = session['calendar'].getCurrentWeek()
+
+	# render the day view with the new day
+	return redirect(url_for('index', view='day'))
+
+@app.route('/changeFocusWeek', methods=['POST'])
+def changeFocusWeek():
+	month = request.form['month']
+	year = int(request.form['year'])
+	weekNum = int(request.form['weekNum'])
+	session['calendar'].currentMonth = session['calendar'].getMonth(month, year)
+	session['calendar'].currentWeek = session['calendar'].currentMonth.weeks[weekNum]
+	session['calendar'].currentDay = session['calendar'].currentWeek[0]
+	if session['calendar'].currentMonth.year == session['calendar'].year1.name:
+		session['calendar'].currentYear = session['calendar'].year1
+	else:
+		session['calendar'].currentYear = session['calendar'].year2
+
+	# render the week view with the new week
+	return redirect(url_for('index', view='week'))
+
+@app.route('/changeFocusMonth', methods=['POST'])
+def changeFocusMonth():
+	month = request.form['month']
+	year = int(request.form['year'])
+	session['calendar'].currentMonth = session['calendar'].getMonth(month, year)
+	session['calendar'].currentWeek = session['calendar'].currentMonth.weeks[0]
+	session['calendar'].currentDay = session['calendar'].currentWeek[0]
+	if session['calendar'].currentMonth.year == session['calendar'].year1.name:
+		session['calendar'].currentYear = session['calendar'].year1
+	else:
+		session['calendar'].currentYear = session['calendar'].year2
+
+	# render the month view with the new month
+	return redirect(url_for('index', view='month'))
+
+@app.route('/changeFocusYear', methods='POST')
+def changeFocusYear():
+	year = int(request.form['year'])
+	if session['calendar'].year1.name == year:
+		session['calendar'].currentYear = session['calendar'].year1
+	else:
+		session['calendar'].currentYear = session['calendar'].year2
+	session['calendar'].currentMonth = session['calendar'].currentYear.months[0]
+	session['calendar'].currentWeek = session['calendar'].currentMonth.weeks[0]
+	session['calendar'].currentDay = session['calendar'].currentWeek[0]
+
+	# render the year view with the new year
+	return redirect(url_for('index', view='year'))
