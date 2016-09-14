@@ -47,3 +47,11 @@ class Year():
 
 		year.months[0].setPrev(self.months[11])
 		self.months[11].setNext(year.months[0])
+
+	def getMonth(self, monthName):
+		monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+		for i in range(len(monthNames)):
+			if monthName == monthNames[i]:
+				return self.months[i]
+
+		return None

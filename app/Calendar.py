@@ -6,13 +6,13 @@ from Year import Year
 
 class Calendar():
     def __init__ (self,firstYear,secondYear):
-        year1 = Year(firstYear)
-        year2 = Year(secondYear)
-        year1.setNext(year2)
-        year2.setPrev(year1)
+        self.year1 = Year(firstYear)
+        self.year2 = Year(secondYear)
+        self.year1.setNext(self.year2)
+        self.year2.setPrev(self.year1)
 
-        self.currentDay = year1.months[0].days[0]
-        self.currentWeek = year1.months[0].weeks[0]
+        self.currentDay = self.year1.months[0].days[0]
+        self.currentWeek = self.year1.months[0].weeks[0]
 
     def getCurrentDay(self):
         return self.currentDay
@@ -28,3 +28,11 @@ class Calendar():
 
     def getCurrentYear(self):
         return self.currentDay.month.year
+
+    def getMonth(self, monthName, yearName):
+        if self.year1.name == yearName:
+            y = self.year1
+        elif self.year2.name == yearName:
+            y = self.year2
+
+        return y.getMonth(monthName)
