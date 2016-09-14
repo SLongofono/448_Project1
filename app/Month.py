@@ -40,3 +40,10 @@ class Month():
 			return True
 		except IndexError:
 			return False
+
+	def getDay(self, date):
+		if (date-1) < len(days) and (date-1) >= 0:
+			return days[date-1]
+
+		else:
+			return None

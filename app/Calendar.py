@@ -35,4 +35,7 @@ class Calendar():
         elif self.year2.name == yearName:
             y = self.year2
 
-        return y.getMonth(monthName)
+        if(y != None):
+            return y.getMonth(monthName)
+        else
+            return None
