@@ -11,7 +11,7 @@
 # 2. Run 'chmod +x flash.sh' from the command line to allow this script to execute
 # 3. Run this script './flask.sh'
 # 4. If all is well, your environment is ready
-# 5. Start your virtual environment by typing 'source bin/activate'
+# 5. Start your virtual environment by typing 'source flask/bin/activate'
 # 6. Stop your virtual environment by typing 'deactivate'
 #
 # Created by Stephen Longofono
@@ -49,10 +49,7 @@ flask/bin/pip install flask-login
 if [ $? -ne 0 ] ; then echo "Failed to download and install flask-login"; exit; fi
 flask/bin/pip install flask-wtf
 if [ $? -ne 0 ] ; then echo "Failed to download and install flask-wtf"; exit; fi
-mv app/ flask/
-if [ $? -ne 0 ] ; then echo "Failed to move app"; exit; fi
-mv run.py flask/
-if [ $? -ne 0 ] ; then echo "Failed to move run.py"; exit; fi
+
 echo
 echo " [ Success ] "
 echo
