@@ -1,13 +1,9 @@
-from Year import Year
+import Calendar
 
-testYear = Year(2016) #5
-testMonth = testYear.months[8]
-testDay = testMonth.days[9]
+testCalendar = Calendar.Calendar(2016, 2017)
+testCalendar.currentDay = testCalendar.getCurrentYear().months[8].days[13]
 
-print (str(testDay.month) + " " + str(testDay.date) + ", " + str(testYear.name) + ' (' + testDay.weekday + ')\n')
+print (testCalendar.currentDay.weekday + ", " + testCalendar.currentDay.month.name)
 
-for week in testMonth.weeks:
-    for day in week:
-        print (str(day.month) + " " + str(day.date) + ", " + str(testYear.name) + ' (' + day.weekday + ')')
-
-    print ('')
+for day in testCalendar.getCurrentWeek():
+    print (day.date)

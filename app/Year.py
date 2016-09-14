@@ -25,9 +25,9 @@ class Year():
 		for i in range(12):
 			days = []
 			for j in range(monthLengths[i]):
-				days.append(Day(monthNames[i], weekdays[(dayCount + weekOffset)%7], j+1, None))
+				days.append(Day(weekdays[(dayCount + weekOffset)%7], j+1, None))
 				dayCount += 1
-			self.months.append(Month(monthNames[i], days, name))
+			self.months.append(Month(monthNames[i], days, self))
 
 		for i in range(12):
 			if i > 0:
