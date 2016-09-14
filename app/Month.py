@@ -8,7 +8,7 @@ class Month():
 		self.numDays = len(days)
 		self.year = year
 
-		for day in days:
+		for day in days
 			day.month = self
 
 		self.weeks = [[]]
@@ -40,10 +40,3 @@ class Month():
 			return True
 		except IndexError:
 			return False
-
-	def getDay(self, date):
-		if (date-1) < len(days) and (date-1) >= 0:
-			return days[date-1]
-
-		else:
-			return None

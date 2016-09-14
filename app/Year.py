@@ -25,9 +25,9 @@ class Year():
 		for i in range(12):
 			days = []
 			for j in range(monthLengths[i]):
-				days.append(Day(weekdays[(dayCount + weekOffset)%7], j+1, None))
+				days.append(Day(monthNames[i], weekdays[(dayCount + weekOffset)%7], j+1, None))
 				dayCount += 1
-			self.months.append(Month(monthNames[i], days, self))
+			self.months.append(Month(monthNames[i], days, name))
 
 		for i in range(12):
 			if i > 0:
@@ -47,11 +47,3 @@ class Year():
 
 		year.months[0].setPrev(self.months[11])
 		self.months[11].setNext(year.months[0])
-
-	def getMonth(self, monthName):
-		monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
-		for i in range(len(monthNames)):
-			if monthName == monthNames[i]:
-				return self.months[i]
-
-		return None
