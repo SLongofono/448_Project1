@@ -15,8 +15,8 @@ Instructions:
         USERNAME='YourUserNameHere'
         PASSWORD='YourPasswordHere'
         
-  5. Move config.py to the flask folder, which should pu it at the same level as the app/ directory
+  5. Move config.py to the same level as the 'app' directory
   6. Start the virtual environment: from within the flask folder, type 'source bin/activate'
-  7. Start the server: from within the flask folder, type './run.py'
+  7. Start the server: from the directory which contains the 'app' folder, type './run.py'
   8. Open a browser and navigate to 'http://localhost:5000/'
   
