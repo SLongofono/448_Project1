@@ -1,10 +1,10 @@
-from Calendar import Calendar
+from Year import Year
 
-testCalendar = Calendar(2016, 2017)
-testCalendar.currentDay = testCalendar.getCurrentYear().months[8].days[13]
+testYear = Year(2016) #5
+testMonth = testYear.months[8]
+testDay = testMonth.days[9]
 
-print (testCalendar.currentDay.weekday + ", " + testCalendar.currentDay.month.name)
-
+print (str(testDay.month) + " " + str(testDay.date) + ", " + str(testYear.name) + ' (' + testDay.weekday + ')\n')
 for day in testCalendar.getCurrentWeek():
     print (day.date)
 
@@ -46,4 +46,3 @@ for day in theWeek:
 
 for day in theWeek2:
 	print day.date, day.weekday
-
