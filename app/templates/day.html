@@ -1,13 +1,14 @@
-{% extends 'base.html' %} # use the base template as a parent
+{% extends 'base.html' %} 	<!-- Inherit from the base HTML template -->
+
 {% block mainBody %}
-	<!-- Verify that we have a calendar -->
-	{% if calendar %}
+	<!-- Verify that we have a user & calendar data -->
+	{% if user %}
 	<h1>Welcome, {{user}}!</h1>
 	<p>
 		Today's details:<br>
-		{{calendar['currentDay']['day']}}, {{calendar['currentDay']['month']}} {{calendar['currentDay']['date']}}, {{calendar['name']}}<br>
+		{{weekday}}, {{month}} {{date}}, {{year}}<br>
 		<ul>
-		{% for item in calendar['currentDay']['details'] %}
+		{% for item in details %}
 		<div id="detailDiv{{loop.index}}">
 			<li>{{item}}</li><br>
 				<button class="btn" type="button" id="delete" num="{{loop.index}}"
@@ -39,9 +40,18 @@
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script>
-currentDay = dayBuilder();
+// Rebuild local copy of the day as a global
+currentDay = {};
+currentDay.stats = ['{{weekday}}', '{{date}}', '{{month}}', '{{year}}'];
+currentDay.labels = ['day','date','month','year'];
 
-//Test labels
+// Build a list of details and an enumeration of them for JSON labels
+{% for detail in details %}
+	currentDay.stats.push('{{detail}}');
+	currentDay.labels.push('detail' + '{{loop.index}}');
+{% endfor%}
+
+//Test fake JSON form
 console.log(serialize(currentDay.labels, currentDay.stats));
 
 // Button handler for views
@@ -63,6 +73,7 @@ $(function(){
 					//window.location.replace("http://localhost:5000/");
 				}
 				else{
+					failMessage('We\'re experiencing difficulties processing your request.  Please try again later.');
 					console.log('Bad status: ');
 					console.log(payload);
 				}
@@ -160,37 +171,19 @@ function modifyDetail(day, oldDetail, newDetail, deleteFlag){
 		}
 	}
 	return;
-}
-
-function dayBuilder(){
-	// Rebuild local copies of the current day for client-side use
-	this_day = {};
-	this_day.stats = ['{{calendar['currentDay']['day']}}','{{calendar['currentDay']['date']}}','{{calendar['currentDay']['month']}}', '{{calendar['name']}}'];
-	//Labels for day stats
-	this_day.labels = ['day','date','month','year'];
-
-	// Build list of details associated with integers
-	var count = 0;
-	{% for detail in calendar['currentDay']['details'] %}
-		this_day.stats.push('{{detail}}');
-		this_day.labels.push('detail' + count)
-		count++;
-	{% endfor %}
-
-	return this_day;
-}
+};
 
 function failMessage(msg){
 	$('#comsField').css('color', 'red');
 	$('#comsField').text(msg);
-}
+};
 
 function saveChanges(currentDay){
 	// Send out an ajax call and assign callbacks to the reply
 	console.log(serialize(currentDay.labels, currentDay.stats));
 	$.ajax({
 		url: 	 '/process',
-		data:    serialize(currentDay.labels, currentDay.stats),
+		data:    serialize(currentDay.labels, currentDay.stats), // Faking a form
 		type: 	 'POST',
 		success: function(reply){
 					payload = JSON.parse(reply)
@@ -208,7 +201,7 @@ function saveChanges(currentDay){
 					failMessage('Failed to communicate with the server, please try again later.');
 				 }
 	});// End ajax
-} // End saveChanges
+}; // End saveChanges
 
 // This function was taken from a stackexchange post, which is kind of
 // ridiculous considering JavaScript is a web language.  It should be built in..
@@ -224,7 +217,7 @@ function sanitize(word){
 	result = result.replace(/#/g, '');
 	console.log(result);
 	return result;
-}
+};
 
 function serialize(names,vals){
 	equals = '=';
@@ -234,12 +227,13 @@ function serialize(names,vals){
 		result.push(names[i] + equals + vals[i])
 	}
 	return result.join(delimiter)
-}
+};
 
 function successMessage(msg){
 	$('#comsField').css('color', 'green');
 	$('#comsField').text(msg);
-}
+};
 
 </script>
+
 {% endblock %}

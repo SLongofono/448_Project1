@@ -1,11 +1,15 @@
 {% extends 'base.html' %} # use the base template as a parent
 {% block mainBody %}
 	<!-- Verify that we have a calendar -->
-	{% if calendar %}
+	{% if user %}
 	<h1>Welcome, {{user}}!</h1>
 	<p>
 		Month details:<br>
-		{{calendar['currentDay']['day']}}, {{calendar['currentDay']['month']}} {{calendar['currentDay']['date']}}, {{calendar['name']}}<br>
+		{{weeks}}<br>
+		{% for week in weeks %}
+			{{week}}<br>
+		{% endfor %}
+		First day of month: {{weekday}}
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
