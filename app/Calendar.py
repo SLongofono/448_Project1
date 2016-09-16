@@ -1,9 +1,19 @@
-
-
-
+## @file Calendar.py
+# @author Grant
+# @brief Your description here
+#
+# @details Your details here
+#
+#
 
 from Year import Year
 
+## @class Calendar
+# @author
+# @brief
+#
+# @details
+#
 class Calendar():
     def __init__ (self,firstYear,secondYear):
         self.year1 = Year(firstYear)
@@ -27,7 +37,9 @@ class Calendar():
         return self.currentDay.month
 
     def getCurrentYear(self):
-        return self.currentDay.month.year
+        if self.currentDay.month.year == self.year1.name:
+            return self.year1
+        return self.year2
 
     def getMonth(self, monthName, yearName):
         if self.year1.name == yearName:
