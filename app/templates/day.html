@@ -7,6 +7,9 @@
 	<p>
 		Today's details:<br>
 		{{weekday}}, {{month}} {{date}}, {{year}}<br>
+		{% if details|length == 0 %}
+			<p>No details saved for this date</p>
+		{% else %}
 		<ul>
 		{% for item in details %}
 		<div id="detailDiv{{loop.index}}">
@@ -23,6 +26,7 @@
 		</div>
 		{% endfor %}
 		</ul>
+		{% endif %}
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -100,8 +104,11 @@ $(function(){
 			// Send changes to server
 			saveChanges(currentDay);
 
+			// Delete the div and its contents completely
+			$(div_pattern).remove()
+
 			// Hide this detail completely
-			$(div_pattern).css('visibility', 'hidden');
+//			$(div_pattern).css('visibility', 'hidden');
 
 			// Hide input/save in case it was visible
 			input_btn.css('visibility', 'hidden');
