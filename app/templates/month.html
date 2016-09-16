@@ -32,37 +32,46 @@
 <script>
 
 function generate_week_btns(week){
-			[1,2] length 2 offset 5
 	names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	var prefix = "<button class='btn' type='button' id=day"
 	var suffix = "</button>"
 	result = Array();
-	if (week.length() < 7){
+	if (week.length < 7){
 		// Case beginning of month week
-		var offset = 7 - week.length();
+		var offset = 7 - week.length;
 		if(week[0] < 15){
-			for(var i = 0; i<week.length(); i++){
+			for(var i = 0; i<week.length; i++){
 				result.push( prefix + week[i] + ">" + names[i+offset] + suffix);
 			}
 		}
 		// Case end of month week
 		else{
-			for(var i = 0; i<week.length(); i++){
-				result.push( prefix + week[i] + ">" + names[7-week.length() + i] + suffix);
+			for(var i = 0; i<week.length; i++){
+				result.push( prefix + week[i] + ">" + names[7-week.length + i] + suffix);
 			}
 		}
 	}
 	else{
-		for(var i = 0; i<week.length(); i++){
+		for(var i = 0; i<week.length; i++){
 			result.push( prefix + week[i] + ">" + names[i] + suffix );
 		}
 	}
 	return result;
 };
+var allWeeks = Array();
+{% for week in weeks %}
+	var temp = Array();
+	{% for day in week %}
+		temp.push('{{day}}');
+	{% endfor %}
+	allWeeks.push(temp);
+{% endfor %}
 
-var allWeeks = {{weeks}};
-var month = {{month}};
-for(var i = 0; i <allWeeks.length; i++;){
+console.log(allWeeks);
+var month = '{{month}}';
+console.log(allWeeks[0]);
+console.log(allWeeks[0][0]);
+for(var i = 0; i <allWeeks.length; i++){
 	// Locate a week element
 	var name = '#week' + i;
 
