@@ -10,49 +10,12 @@
 			{{week}}<br>
 		{% endfor %}
 		First day of month: {{weekday}}
-		<div id = "monthCal">
-			<li>{{item}}</li><br>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-		  <button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-		  <button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-		  <button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-		  <button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<br>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<br>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<br>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<br>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<button class='btn ' style = "50" type = "button" id="Monday">Day</button>
-			<br>
-		</div>
+		<div id="week0"></div>
+		<div id="week1"></div>
+		<div id="week2"></div>
+		<div id="week3"></div>
+		<div id="week4"></div>
+		<div id="week5"></div>
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -67,6 +30,48 @@
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script>
+
+function generate_week_btns(week){
+			[1,2] length 2 offset 5
+	names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	var prefix = "<button class='btn' type='button' id=day"
+	var suffix = "</button>"
+	result = Array();
+	if (week.length() < 7){
+		// Case beginning of month week
+		var offset = 7 - week.length();
+		if(week[0] < 15){
+			for(var i = 0; i<week.length(); i++){
+				result.push( prefix + week[i] + ">" + names[i+offset] + suffix);
+			}
+		}
+		// Case end of month week
+		else{
+			for(var i = 0; i<week.length(); i++){
+				result.push( prefix + week[i] + ">" + names[7-week.length() + i] + suffix);
+			}
+		}
+	}
+	else{
+		for(var i = 0; i<week.length(); i++){
+			result.push( prefix + week[i] + ">" + names[i] + suffix );
+		}
+	}
+	return result;
+};
+
+var allWeeks = {{weeks}};
+var month = {{month}};
+for(var i = 0; i <allWeeks.length; i++;){
+	// Locate a week element
+	var name = '#week' + i;
+
+	// Generate a set of buttons
+	this_week = generate_week_btns(allWeeks[i]);
+
+	// Append the buttons
+	$(name).append(this_week);
+}
 
 // Button handler for views
 $(function(){
