@@ -1,6 +1,13 @@
 # 448_Project1
 
-Calendar project for software engineering, EECS448
+Our calendar project for software engineering, EECS448.  The goal was to create a
+calendar application which allowed a single user to view years, months, weeks, and
+days in an academic calendar year.  Individual days track persistent details which the
+user can add or remove at will.
+
+We were not permitted to use a database, so we used a logfile to fake one.  Some of
+us wanted to explore Flask as a web framework, so we wrote a server and client to display
+the application.
 
 Instructions:
   0. Install virtualenv and python on your machine, add to your system path
