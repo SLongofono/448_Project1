@@ -46,8 +46,8 @@ class Calendar():
             y = self.year1
         elif self.year2.name == yearName:
             y = self.year2
+        for month in y.months:
+            if month.name == monthName:
+                return month
 
-        if(y != None):
-            return y.getMonth(monthName)
-        else:
-            return None
+        return None
