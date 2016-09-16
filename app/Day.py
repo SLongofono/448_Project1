@@ -1,7 +1,6 @@
 class Day():
 
 	def __init__(self, weekday, date, details):
-		#self.month = month
 		self.month = None
 		self.weekday = weekday
 		self.date = date
