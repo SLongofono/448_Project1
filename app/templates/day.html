@@ -7,26 +7,29 @@
 	<p>
 		Today's details:<br>
 		{{weekday}}, {{month}} {{date}}, {{year}}<br>
-		{% if details|length == 0 %}
-			<p>No details saved for this date</p>
-		{% else %}
 		<ul>
+		<div id="detailWrapper">
 		{% for item in details %}
-		<div id="detailDiv{{loop.index}}">
-			<li>{{item}}</li><br>
-				<button class="btn" type="button" id="delete" num="{{loop.index}}"
-				        data="{{item}}" value="Delete">Delete</button>
-				<button class="btn" type="button" id="edit"   num="{{loop.index}}"
-				        data="{{item}}" value="Edit">Edit</button>
-				<input  type="text" style="visibility:hidden" id="input" num="{{loop.index}}"
-				        data="{{item}}" value="{{item}}"></input>
-				<button class="btn" type="button" style="visibility:hidden" id="save" num="{{loop.index}}"
-				        data="{{item}}" value="Save">Save</button>
+			<div id="detailDiv{{loop.index}}">
+				<li>{{item}}</li><br>
+					<button class="btn" type="button" id="delete" num="{{loop.index}}"
+					        data="{{item}}" value="Delete">Delete</button>
+					<button class="btn" type="button" id="edit"   num="{{loop.index}}"
+					        data="{{item}}" value="Edit">Edit</button>
+					<input  type="text" style="visibility:hidden" id="input" num="{{loop.index}}"
+					        data="{{item}}" value="{{item}}"></input>
+					<button class="btn" type="button" style="visibility:hidden" id="save" num="{{loop.index}}"
+					        data="{{item}}" value="Save">Save</button>
+
+			</div>
+			{% endfor %}
 
 		</div>
-		{% endfor %}
 		</ul>
-		{% endif %}
+		<div id="addDetailSection">
+			<button class='btn' type="button" id="addBtn">Add Detail</button>
+			<input type='text' style='visibility:hidden;' id='newDetailInput'></input>
+		</div>
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -44,6 +47,11 @@
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script>
+
+// Maintain a count of details on this page
+var detailCount = {{details|length}};
+console.log(detailCount)
+
 // Rebuild local copy of the day as a global
 currentDay = {};
 currentDay.stats = ['{{weekday}}', '{{date}}', '{{month}}', '{{year}}'];
@@ -87,8 +95,13 @@ $(function(){
 });
 
 // Button handler for details
+// This one is different from the other button handlers in that it
+// will be interacting with dynamically created DOM elements.  For some
+// arcane reason, dynamically created items will not be selectable unless
+// the 'on' function is used.  Hooray.
 $(function(){
-	$("[value]").click(function(){
+	$("#detailWrapper").on('click', "[value]", function(){
+		console.log('Clicked a button with number ' + $(this).attr("num"));
 		var div_pattern = "#detailDiv" + $(this).attr("num")
 		var delete_btn = $(div_pattern).find('#delete')
 		var edit_btn = $(div_pattern).find('#edit')
@@ -106,13 +119,6 @@ $(function(){
 
 			// Delete the div and its contents completely
 			$(div_pattern).remove()
-
-			// Hide this detail completely
-//			$(div_pattern).css('visibility', 'hidden');
-
-			// Hide input/save in case it was visible
-			input_btn.css('visibility', 'hidden');
-			save_btn.css('visibility', 'hidden')
 		}
 
 		//Case edit button
@@ -124,14 +130,17 @@ $(function(){
 
 		//Case Save button
 		else if($(this).attr("id") == "save"){
+
 			// Fetch new detail for this detail id number
 			var newDetail = sanitize(input_btn.val());
 
+			// Verify that there is in fact a new detail before making changes
 			if (newDetail.length <= 0){
 				failMessage('No valid detail text.  Use the delete button to remove a detail');
 				input_btn.val($(this).attr("data"));
 				return;
 			}
+
 			console.log("Saving new detail: " + newDetail);
 
 			// Update the local day object
@@ -154,28 +163,79 @@ $(function(){
 	});
 });
 
+// Button handler for add detail
+$(function(){
+	$('#addDetailSection').find('*').click(function(){
+		var detailDiv = $('#detailWrapper');
+
+		// The template engine counts starting at 1, which is not so great in
+		// this context
+		var idNum = detailCount + 1;
+
+		// Build HTML buttons for a new detail
+		var newDetailSetup = buildDetail(idNum);
+
+		// Tack it onto the end of the detailDiv
+		$('#detailWrapper').append(newDetailSetup);
+
+		detailCount += 1;
+		console.log(detailCount);
+	});
+});
+
+
+function buildDetail(num){
+	var p1  = '<div id="detailDiv'
+	var p2  = '"><li>New</li><br><button class="btn" type="button" id="delete" num="'
+	var p3  = '"data="New" value="Delete">Delete</button><button class="btn" type="button" id="edit"   num="'
+	var p4  = '" data="New" value="Edit">Edit</button><input  type="text" style="visibility:hidden" id="input" num="'
+	var p5  = '" data="New" value="New"></input><button class="btn" type="button" style="visibility:hidden" id="save" num="'
+	var p6 = '" data="New" value="Save">Save</button></div>'
+
+	return p1 + num + p2 + num + p3 + num + p4 + num + p5 + num + p6;
+}
+
+
 // Modify detail function
 function modifyDetail(day, oldDetail, newDetail, deleteFlag){
 	console.log(currentDay);
-	// Locate detail
-	// start at index 4 so expected values are never changed
-	for(var i = 4; i<day.stats.length; i++){
-		if (day.stats[i].indexOf(oldDetail) >= 0){
-			if(deleteFlag){
-				console.log('Removing detail: ' + oldDetail);
-				// Remove the detail and the corresponding label
-				day.stats.splice(i,1);
-				day.labels.splice(i,1);
-				console.log('done');
+	if(day.stats.length > 4){
+		var done = false;
+		// Locate detail
+		// start at index 4 so expected values are never changed
+		for(var i = 4; i<day.stats.length; i++){
+			// If the detail exists...
+			if (day.stats[i].indexOf(oldDetail) >= 0){
+				if(deleteFlag){
+					console.log('Removing detail: ' + oldDetail);
+					// Remove the detail and the corresponding label
+					day.stats.splice(i,1);
+					day.labels.splice(i,1);
+					console.log('done');
+				}
+				else{
+					// Replace the value.  Leave the label unchanged.
+					console.log("Changing detail");
+					day.stats[i] = newDetail;
+					console.log("Detail changed to " + newDetail);
+				}
+				done = true;
+				break;
 			}
-			else{
-				// Replace the value.  Leave the label unchanged.
-				console.log("Changing detail");
-				day.stats[i] = newDetail;
-				console.log("Detail changed to " + newDetail);
-			}
-			break;
+		} //end for
+		if(!done){
+			// This is a new detail
+			// Get the number of the last detail
+			lastDetail = day.labels[day.labels.length-1];
+			newNum = lastDetail.charAt(lastDetail.length-1) + 1;
+			day.stats.push(newDetail);
+			day.labels.push('detail' + newNum);
 		}
+	} //end if
+	else{
+		// This is the first detail
+		day.stats.push(newDetail);
+		day.labels.push('detail0');
 	}
 	return;
 };

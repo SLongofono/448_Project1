@@ -35,7 +35,7 @@ import Calendar
 
 
 # TODO insert logfile i/o here
-calendar_obj	= Calendar.Calendar(2016, 2017)
+calendar_obj	= Calendar.Calendar(2016, 2017, 'logfile.txt')
 app.logger.info('TESTING CALENDAR GLOBAL')
 app.logger.info(calendar_obj.year1.name)
 app.logger.info(calendar_obj.year2.name)
@@ -48,7 +48,15 @@ app.logger.info(calendar_obj.getMonth(calendar_obj.getCurrentMonth().name, calen
 calendar_obj.currentDay.addDetail('PHSX Lab 2PM')
 calendar_obj.currentDay.addDetail('Meeting with advisor 4PM')
 calendar_obj.currentDay.addDetail('Party 8PM')
-
+calendar_obj.currentDay = calendar_obj.getCurrentDay().getNext()
+calendar_obj.currentDay.addDetail('448 Lecture 11:00 AM')
+calendar_obj.currentDay.addDetail('Circuits recitation 2PM')
+calendar_obj.currentDay.addDetail('Dinner with lady')
+calendar_obj.currentDay = calendar_obj.getCurrentDay().getNext()
+calendar_obj.currentDay.addDetail('Dog to vet')
+calendar_obj.currentDay.addDetail('Post office')
+calendar_obj.currentDay.addDetail('Grocery Shopping')
+calendar_obj.currentDay = calendar_obj.getCurrentDay().getPrev()
 
 ## @fn index
 # @brief root domain request behavior
