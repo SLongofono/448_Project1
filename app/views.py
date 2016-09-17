@@ -284,22 +284,24 @@ def viewChange():
 #
 @app.route('/changeFocusDay', methods=['POST'])
 def changeFocusDay():
-	day = int(request.form['day'])
-	month = request.form['month']
-	year = int(request.form['year'])
-
-	# Find the new focus day and update current day, week, month, year
-	calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-	calendar_obj.currentDay = calendar_obj.getDay(day-1)
-	if calendar_obj.currentMonth.year == calendar_obj.year1.name:
-		calendar_obj.currentYear = calendar_obj.year1
-	else:
-		calendar_obj.currentYear = calendar_obj.year2
-	calendar_obj.currentWeek = calendar_obj.getCurrentWeek()
-
+	form = DateForm()
+	if form.validate_on_submit():	#if all our validation checks pass we have a string of form mm/dd/yyyy
+		day = int(form.date[3:5])
+		monthNum = int(form.date[:2])
+		year = int(form.date[6:])
+		month = calendar_obj.year1.months[monthNum+1].name
+	
+		# Find the new focus day and update current day, week, month, year
+		calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
+		calendar_obj.currentDay = calendar_obj.getDay(day-1)
+		if calendar_obj.currentMonth.year == calendar_obj.year1.name:
+			calendar_obj.currentYear = calendar_obj.year1
+		else:
+			calendar_obj.currentYear = calendar_obj.year2
+		calendar_obj.currentWeek = calendar_obj.getCurrentWeek()
+	
 	# render the day view with the new day
 	return redirect(url_for('index', view='day'))
-
 
 @app.route('/changeFocusMonth', methods=['POST'])
 def changeFocusMonth():
