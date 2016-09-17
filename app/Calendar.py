@@ -15,7 +15,7 @@ from Year import Year
 # @details
 #
 class Calendar():
-    def __init__ (self,firstYear,secondYear):
+    def __init__ (self,firstYear,secondYear,fileName):
         self.year1 = Year(firstYear)
         self.year2 = Year(secondYear)
         self.year1.setNext(self.year2)
