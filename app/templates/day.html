@@ -30,6 +30,18 @@
 			<button class='btn' type="button" id="addBtn">Add Detail</button>
 			<input type='text' style='visibility:hidden;' id='newDetailInput'></input>
 		</div>
+		<div id="jumpDiv">
+			<form action='' method='post' name='changeFocusDay'>
+			{{form.hidden_tag()}}
+			<p>{{form.date}}
+			{% for err in form.uname.errors %}
+				<span style='color:red;'>{ {error} }</span>
+			{% endfor %}
+			</p>
+			<input class='btn' type='submit' id='#jump' value='mm/dd/yyyy'>
+			</p>
+			</form>
+		</div>
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -252,6 +264,11 @@ function failMessage(msg){
 	$('#comsField').css('color', 'red');
 	$('#comsField').text(msg);
 };
+
+function parseDate(str){
+	verified = 
+	result = Array();
+}
 
 function saveChanges(currentDay){
 	// Send out an ajax call and assign callbacks to the reply
