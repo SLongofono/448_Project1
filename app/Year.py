@@ -6,8 +6,6 @@ class Year():
 	def __init__(self, name):
 		self.name = name
 		self.months = []
-		#self.firstDay = firstDay
-		#self.lastDay = lastDay
 		monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 		weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -25,9 +23,9 @@ class Year():
 		for i in range(12):
 			days = []
 			for j in range(monthLengths[i]):
-				days.append(Day(weekdays[(dayCount + weekOffset)%7], j+1, []))
+				days.append(Day(weekdays[(dayCount + weekOffset)%7], j+1, None))
 				dayCount += 1
-			self.months.append(Month(monthNames[i], days, name))
+			self.months.append(Month(monthNames[i], days, self))
 
 		for i in range(12):
 			if i > 0:
@@ -47,3 +45,11 @@ class Year():
 
 		year.months[0].setPrev(self.months[11])
 		self.months[11].setNext(year.months[0])
+
+	def getMonth(self, monthName):
+		monthNames = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+		for i in range(len(monthNames)):
+			if monthName == monthNames[i]:
+				return self.months[i]
+
+		return None
