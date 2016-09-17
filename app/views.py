@@ -33,30 +33,11 @@ from flask import logging			# Developer feedback
 import traceback					# Exception feedback
 import Calendar
 
-
 # TODO insert logfile i/o here
 calendar_obj	= Calendar.Calendar(2016, 2017, 'logfile.txt')
-app.logger.info('TESTING CALENDAR GLOBAL')
+calendar_obj.load()
 app.logger.info(calendar_obj.year1.name)
-app.logger.info(calendar_obj.year2.name)
-app.logger.info(calendar_obj.currentDay)
-app.logger.info(calendar_obj.currentWeek)
-app.logger.info(calendar_obj.getCurrentWeek)
-app.logger.info(calendar_obj.getCurrentYear)
-app.logger.info(calendar_obj.getMonth(calendar_obj.getCurrentMonth().name, calendar_obj.year1.name))
-
-calendar_obj.currentDay.addDetail('PHSX Lab 2PM')
-calendar_obj.currentDay.addDetail('Meeting with advisor 4PM')
-calendar_obj.currentDay.addDetail('Party 8PM')
-calendar_obj.currentDay = calendar_obj.getCurrentDay().getNext()
-calendar_obj.currentDay.addDetail('448 Lecture 11:00 AM')
-calendar_obj.currentDay.addDetail('Circuits recitation 2PM')
-calendar_obj.currentDay.addDetail('Dinner with lady')
-calendar_obj.currentDay = calendar_obj.getCurrentDay().getNext()
-calendar_obj.currentDay.addDetail('Dog to vet')
-calendar_obj.currentDay.addDetail('Post office')
-calendar_obj.currentDay.addDetail('Grocery Shopping')
-calendar_obj.currentDay = calendar_obj.getCurrentDay().getPrev()
+app.logger.info(calendar_obj.getCurrentDay().details)
 
 ## @fn index
 # @brief root domain request behavior
@@ -209,17 +190,21 @@ def process():
 			if key.startswith('detail'):
 				newDetails.append(value)
 		#Find the day
-		day_obj = calendar_obj.getMonth(month, int(year)).getDay(int(date))
+		day_obj = calendar_obj.getCurrentDay()
 
 		app.logger.info('Changing details, old values:')
 		app.logger.info(day_obj.details)
 		day_obj.details = newDetails
 		app.logger.info('\nNew values:')
 		app.logger.info(day_obj.details)
-
 		#Update log file
-		# TODO log file i/o here
+		calendar_obj.save()
 
+		app.logger.info('This day state:')
+		app.logger.info(day_obj.details)
+
+		app.logger.info('Calendar obj state:')
+		app.logger.info(calendar_obj.getCurrentDay().details)
 	except:
 		# Log exception info on failure
 		app.logger.info(traceback.print_exc())
