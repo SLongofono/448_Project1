@@ -39,9 +39,7 @@ class Calendar():
         return self.currentDay.month
 
     def getCurrentYear(self):
-        if self.currentDay.month.year == self.year1.name:
-            return self.year1
-        return self.year2
+        return self.currentDay.month.year
 
     def getYear(self, yearName):
         if self.year1.name == yearName:
