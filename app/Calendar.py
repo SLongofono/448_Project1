@@ -73,7 +73,7 @@ class Calendar():
     # @param [out] return the year object which owns currentDay
     #
     def getCurrentYear(self):
-        if self.currentDay.month.year == self.year1.name:
+        if self.currentDay.month.year.name == self.year1.name:
             return self.year1
         return self.year2
 
