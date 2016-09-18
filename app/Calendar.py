@@ -41,6 +41,7 @@ class Calendar():
         self.fileName = fileName
 
         self.currentDay = self.year1.months[0].days[0]
+        self.currentWeek = self.year1.months[0].weeks[0]
 
     ## @fn getCurrentDay
     # @brief Gets the currentDay
