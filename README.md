@@ -28,9 +28,9 @@ Instructions:
 
 	     cloned_folder/
 	        ->app/
-                    ->static
-	            ->templates
-                    ->app files
+                   ->static
+                   ->templates
+                   ->app files
 	        ->flask/
 	        ->config.py
 	        ->flask.sh
