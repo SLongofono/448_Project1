@@ -52,7 +52,7 @@ class Year():
 		# https://en.wikipedia.org/wiki/Leap_year#Algorithm
 		y = (name % 100) - 1
 		c = name // 100
-		weekOffset = int((2.4 + name + y/4 + c/4 - 2*c)%7) #30.4
+		weekOffset = int((2.4 + name + y/4 + c/4 - 2*c)%7)
 
 		dayCount = 0
 		for i in range(12):
