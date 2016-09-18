@@ -12,7 +12,7 @@
 #
 
 from flask_wtf import Form
-from wtforms import StringField
+from wtforms import StringField, PasswordField
 from wtforms.validators import Required
 from wtforms.validators import Regexp
 
@@ -41,7 +41,7 @@ dateRegx = '^' + dayRegx + delimRegx + monthRegx + delimRegx + yearRegx
 #
 class LoginForm(Form): #custom class inherits from wtf.Form
 	uname = StringField('uname', validators=[Required()])
-	pword = StringField('pword', validators=[Required()])
+	pword = PasswordField('pword', validators=[Required()])
 
 ## @class DateForm
 # @brief Form which validates a string is in date format, mm/dd/yyyy or mm-dd-yyyy

@@ -48,7 +48,7 @@ def delete():
 		date = request.form['date']
 		month = request.form['month']
 		year = int(request.form['year'])
-		detail = request.form['detail]
+		detail = request.form['detail']
 
 		#Find the day
 		day_obj = calendar_obj.getCurrentDay()
