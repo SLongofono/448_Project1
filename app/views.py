@@ -21,7 +21,7 @@
 
 from app import app					# Import our configured app object from upstream
 from flask import render_template	# Ability to use jinja2 templates
-from flask import flash				# Ability to pass consumeable text content
+from flask import flash				# Ability to pass consumeable text content to user
 from flask import redirect			# Ability to override browser address request
 from flask import session			# Cookies to track the calendar for session
 from flask import url_for			# Let flask manage urls, we use function names
@@ -101,7 +101,6 @@ def index(view=None):
 		weekday = calendar_obj.currentDay.weekday
 
 		if 'week' == display:
-			flash('rendering week view')
 			daysList = [str(x.date) for x in calendar_obj.currentWeek]
 			return render_template('week.html',
 									days=daysList,
@@ -111,7 +110,6 @@ def index(view=None):
 									user=session['uname'])
 
 		elif 'month' == display:
-			flash('rendering month view')
 			month_obj = calendar_obj.getCurrentMonth()
 			firstDay = month_obj.days[0].weekday
 			numDays = len(month_obj.days)
@@ -128,12 +126,10 @@ def index(view=None):
 									user=session['uname'])
 
 		elif 'year' == display:
-			flash('rendering year view')
 			return render_template('year.html',
 									year=year,
 									user=session['uname'])
 
-		flash('rendering day view')
 		weekday = calendar_obj.getCurrentDay().weekday
 		date = calendar_obj.getCurrentDay().date
 		details = list(calendar_obj.getCurrentDay().details)
@@ -175,7 +171,6 @@ def login():
 			user = {'name':form.uname.data}
 			# Prepare a session to hold user info and the calendar objects
 			session['uname'] = form.uname.data
-			flash('session prepared')
 			# Go to main page with populated session
 			return redirect(url_for('index'))
 
@@ -311,16 +306,16 @@ def viewChange():
 #					  with the appropriate view set.
 #
 # @details
-#		The changeFocusX methods handle changing the view when a specific day, week,
-# month, or year is indicated client-side.  This method is very similar to the viewChange
+#		The changeFocusX methods handle changing the view when a specific day or
+# month is indicated client-side.  This method is very similar to the viewChange
 # method, except that in this case the calendar object is modified to reflect the appropriate
 # focus.  Specifically, the currentDay, currentWeek, currentMonth, and currentYear members of
 # the Calendar class are updated.
 #
 # On completion the method will return a status and a link to the appropriate view using the index method.
 #
-# Assumes some combination of 'day', 'month', and 'year' are present and have values.
-# See individual implementations for the expected input.
+# Assumes some combination of 'day', 'month', and 'year' are present and have valid values.
+# See individual implementations for the expected input.  Recovers gracefully with a catch-all exception handler.
 #
 @app.route('/changeFocusDay', methods=['GET','POST'])
 def changeFocusDay():
@@ -351,53 +346,29 @@ def changeFocusDay():
 		result = {'status':'BAD'}
 		return json.dumps(result)
 
-@app.route('/changeFocusMonth', methods=['POST'])
+@app.route('/changeFocusMonth', methods=['GET', 'POST'])
 def changeFocusMonth():
-	month = request.form['month']
-	year = int(request.form['year'])
-	calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-	calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[0]
-	calendar_obj.currentDay = calendar_obj.currentWeek[0]
-	if calendar_obj.currentMonth.year == calendar_obj.year1.name:
-		calendar_obj.currentYear = calendar_obj.year1
-	else:
-		calendar_obj.currentYear = calendar_obj.year2
+	try:
+		month = request.form['month']
+		year = int(request.form['year'])
+		calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
+		calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[0]
+		calendar_obj.currentDay = calendar_obj.currentWeek[0]
+		if calendar_obj.currentMonth.year == calendar_obj.year1.name:
+			calendar_obj.currentYear = calendar_obj.year1
+		else:
+			calendar_obj.currentYear = calendar_obj.year2
 
-	# render the month view with the new month
-	return redirect(url_for('index', view='month'))
+		result = {'status':'OK', 'link':url_for('index', view='month')}
 
+		#return status and a link to redirect to
+		return json.dumps(result)
 
-@app.route('/changeFocusWeek', methods=['POST'])
-def changeFocusWeek():
-	month = request.form['month']
-	year = int(request.form['year'])
-	weekNum = int(request.form['weekNum'])
-	calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-	calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[weekNum]
-	calendar_obj.currentDay = calendar_obj.currentWeek[0]
-	if calendar_obj.currentMonth.year == calendar_obj.year1.name:
-		calendar_obj.currentYear = calendar_obj.year1
-	else:
-		calendar_obj.currentYear = calendar_obj.year2
+	except:
+		app.logger.info(traceback.print_exc())
+		result = {'status':'BAD'}
+		return json.dumps(result)
 
-	# render the week view with the new week
-	return redirect(url_for('index', view='week'))
-
-
-@app.route('/changeFocusYear', methods=['POST'])
-def changeFocusYear():
-	year = int(request.form['year'])
-	if calendar_obj.year1.name == year:
-		calendar_obj.currentYear = calendar_obj.year1
-	else:
-		calendar_obj.currentYear = calendar_obj.year2
-
-	calendar_obj.currentMonth = calendar_obj.currentYear.months[0]
-	calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[0]
-	calendar_obj.currentDay = calendar_obj.currentWeek[0]
-
-	# render the year view with the new year
-	return redirect(url_for('index', view='year'))
 
 @app.errorhandler(404)
 def page_not_found(e):
