@@ -39,7 +39,9 @@ var allWeeks = Array();
 {% endfor %}
 
 var month = '{{month}}';
-var	names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+var year = '{{year}}';
+var	names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 var firstDay = '{{firstDay}}'.substring(0,3);
 var lastDay = '{{lastDay}}'.substring(0,3);
 
@@ -61,7 +63,7 @@ for(var i = 0; i <allWeeks.length; i++){
 
 // Hide days from previous and next month
 // Don't trim the first January front
-if( allWeeks[0].length == 7 ){
+if(month != 'january' || year != '2016'){
 	var firstWeek = $('#week0');
 	for(var i = 0; i<trim_front; i++){
 		var selector = 'button:nth-child(' + (i+1) + ')';
@@ -70,7 +72,7 @@ if( allWeeks[0].length == 7 ){
 }
 
 // Don't trim the last December back
-if(allWeeks[allWeeks.length-1].length == 7){
+if(month != 'december' || year != '2017'){
 	var lastWeek = $('#week' + (allWeeks.length -1));
 	for(var i = allWeeks[allWeeks.length-1].length-1; i>trim_back; i--){
 		var selector = 'button:nth-child(' + (i+1) + ')';
@@ -133,6 +135,35 @@ $(function(){
 		});// End ajax
 	});
 });
+
+
+// Button handler for month buttons
+$(function(){
+	$('.btn_month').click(function(){
+		var payload = serialize(['day', 'month', 'year'], [$(this).attr('id'), (months.indexOf('{{month}}')+1), year]);
+		console.log(payload);
+		$.ajax({
+			url: 	 '/changeFocusDay',
+			data:    payload,
+			type: 	 'POST',
+			success: function(reply){
+				// Once the server has confirmed a change, redirect
+				// Parse the JSON into an object
+				payload = JSON.parse(reply);
+				if (payload.status == 'OK'){
+					// redirect, cueing the server to display the updated view
+					window.location.replace(payload.link);
+					//window.location.replace("http://localhost:5000/");
+				}
+				else{
+					console.log('Bad status: ');
+					console.log(payload);
+				}
+			}
+		});// End ajax
+	});
+});
+
 
 function failMessage(msg){
 	$('#comsField').css('color', 'red');

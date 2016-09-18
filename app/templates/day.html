@@ -296,6 +296,7 @@ $(function(){
 
 		if(date !== 'undefined' && date != null){
 			var data = serialize(['day','month','year'], date);
+			console.log(data);
 			$.ajax({
 				url: 	 '/changeFocusDay',
 				data:    data,
