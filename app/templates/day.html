@@ -122,6 +122,7 @@ $(function(){
 		var orig_detail = $(div_pattern).find('li')
 
 		// Case delete button
+		// TODO verify that this is working correctly, or switch to delete fcn
 		if($(this).attr("id") == "delete"){
 			// Update the local day object
 			modifyDetail(currentDay, $(this).attr("data"), "", true);
