@@ -74,7 +74,7 @@ class Day():
 	#
 	def getPrev(self):
 		if self.date > 1:
-			return self.month.days[date-2]
+			return self.month.days[self.date-2]
 		else:
 			return self.month.prev.days[-1]
 
@@ -84,6 +84,6 @@ class Day():
 	#
 	def getNext(self):
 		if self.date < len(self.month.days):
-			return self.month.days[date]
+			return self.month.days[self.date]
 		else:
 			return self.month.next.days[0]
