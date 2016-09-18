@@ -112,14 +112,17 @@ def index(view=None):
 
 		elif 'month' == display:
 			flash('rendering month view')
-			weekday = calendar_obj.getCurrentMonth().days[0].weekday
-			numDays = len(calendar_obj.getCurrentMonth().days)
+			month_obj = calendar_obj.getCurrentMonth()
+			firstDay = month_obj.days[0].weekday
+			numDays = len(month_obj.days)
+			lastDay = month_obj.days[numDays-1].weekday
 			weeks = []
 			for week in calendar_obj.getCurrentMonth().weeks:
 				weeks.append([str(x.date) for x in week])
 			return render_template('month.html',
 									weeks=weeks,
-									weekday=weekday,
+									firstDay=firstDay,
+									lastDay=lastDay,
 									month=month,
 									year=year,
 									user=session['uname'])

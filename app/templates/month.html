@@ -2,20 +2,16 @@
 {% block mainBody %}
 	<!-- Verify that we have a calendar -->
 	{% if user %}
-	<h1>Welcome, {{user}}!</h1>
+	<h1 style="text-transform: uppercase;">{{month}} {{year}}</h1>
 	<p>
-		Month details:<br>
-		{{weeks}}<br>
-		{% for week in weeks %}
-			{{week}}<br>
-		{% endfor %}
-		First day of month: {{weekday}}
-		<div id="week0"></div>
-		<div id="week1"></div>
-		<div id="week2"></div>
-		<div id="week3"></div>
-		<div id="week4"></div>
-		<div id="week5"></div>
+		<div class='btn_container pull-left'>
+			<div id="week0" class="btn_container pull-right"></div><br><br><br><br><br>
+			<div id="week1" class="btn_container pull-right"></div><br><br><br><br><br>
+			<div id="week2" class="btn_container pull-right"></div><br><br><br><br><br>
+			<div id="week3" class="btn_container pull-right"></div><br><br><br><br><br>
+			<div id="week4" class="btn_container pull-right"></div><br><br><br><br><br>
+			<div id="week5" class="btn_container pull-right"></div><br><br><br><br><br>
+		</div>
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -23,7 +19,7 @@
 	{% endif %}
 	<p id='comsField'></p>
 	<br><br>
-	<div class="container" id="viewChange">
+	<div class='footer' style='margin-top:650px;' id="viewChange">
 		<button class='btn' type="button" id="day">Day View</button>
 		<button class='btn' type="button" id="week">Week View</button>
 		<button class='btn' type="button" id="year">Year View</button>
@@ -31,33 +27,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script>
 
-function generate_week_btns(week){
-	names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	var prefix = "<button class='btn' type='button' id=day"
-	var suffix = "</button>"
-	result = Array();
-	if (week.length < 7){
-		// Case beginning of month week
-		var offset = 7 - week.length;
-		if(week[0] < 15){
-			for(var i = 0; i<week.length; i++){
-				result.push( prefix + week[i] + ">" + names[i+offset] + suffix);
-			}
-		}
-		// Case end of month week
-		else{
-			for(var i = 0; i<week.length; i++){
-				result.push( prefix + week[i] + ">" + names[7-week.length + i] + suffix);
-			}
-		}
-	}
-	else{
-		for(var i = 0; i<week.length; i++){
-			result.push( prefix + week[i] + ">" + names[i] + suffix );
-		}
-	}
-	return result;
-};
+// Setup Display
+
 var allWeeks = Array();
 {% for week in weeks %}
 	var temp = Array();
@@ -67,10 +38,16 @@ var allWeeks = Array();
 	allWeeks.push(temp);
 {% endfor %}
 
-console.log(allWeeks);
 var month = '{{month}}';
-console.log(allWeeks[0]);
-console.log(allWeeks[0][0]);
+var	names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+var firstDay = '{{firstDay}}'.substring(0,3);
+var lastDay = '{{lastDay}}'.substring(0,3);
+
+//Globals for trimming days
+trim_front = names.indexOf(firstDay);
+trim_back = names.indexOf(lastDay);
+
+// Build html elements
 for(var i = 0; i <allWeeks.length; i++){
 	// Locate a week element
 	var name = '#week' + i;
@@ -81,6 +58,54 @@ for(var i = 0; i <allWeeks.length; i++){
 	// Append the buttons
 	$(name).append(this_week);
 }
+
+// Hide days from previous and next month
+// Don't trim the first January front
+if( allWeeks[0].length == 7 ){
+	var firstWeek = $('#week0');
+	for(var i = 0; i<trim_front; i++){
+		var selector = 'button:nth-child(' + (i+1) + ')';
+		firstWeek.find(selector).css('visibility', 'hidden');
+	}
+}
+
+// Don't trim the last December back
+if(allWeeks[allWeeks.length-1].length == 7){
+	var lastWeek = $('#week' + (allWeeks.length -1));
+	for(var i = allWeeks[allWeeks.length-1].length-1; i>trim_back; i--){
+		var selector = 'button:nth-child(' + (i+1) + ')';
+		lastWeek.find(selector).css('visibility', 'hidden');
+	}
+}
+
+
+function generate_week_btns(week){
+	var prefix = "<button class='btn_month' type='button' id="
+	var suffix = "</button>"
+	result = Array();
+	if (week.length < 7){
+		// Case beginning of month short week
+		var offset = 7 - week.length;
+		if(week[0] < 15){
+			for(var i = 0; i<week.length; i++){
+				result.push( prefix + week[i] + ">" + names[i+offset] + '<br>' + week[i] + suffix);
+			}
+		}
+		// Case end of month week
+		else{
+			for(var i = 0; i<week.length; i++){
+				result.push( prefix + week[i] + ">" + names[7-week.length + i] + '<br>' + week[i] + suffix);
+			}
+		}
+	}
+	else{
+		for(var i = 0; i<week.length; i++){
+			result.push( prefix + week[i] + ">" + names[i] + '<br>' + week[i] + suffix );
+		}
+	}
+	return result;
+};
+
 
 // Button handler for views
 $(function(){
