@@ -31,16 +31,10 @@
 			<input type='text' style='visibility:hidden;' id='newDetailInput'></input>
 		</div>
 		<div id="jumpDiv">
-			<form action='' method='post' name='changeFocusDay'>
-			{{form.hidden_tag()}}
-			<p>{{form.date}}
-			{% for err in form.uname.errors %}
-				<span style='color:red;'>{ {error} }</span>
-			{% endfor %}
+			<p>
+				<input type='text' id='jumpInput' value="mm/dd/yyyy">
+				<input class='btn' type='submit' id='jump' value='Jump to day'>
 			</p>
-			<input class='btn' type='submit' id='#jump' value='Jump to day'>
-			</p>
-			</form>
 		</div>
 	</p>
 	{% else %}
@@ -132,6 +126,9 @@ $(function(){
 
 			// Delete the div and its contents completely
 			$(div_pattern).remove()
+
+			// Update global detail count
+			detailCount -= 1;
 		}
 
 		//Case edit button
@@ -213,19 +210,20 @@ function buildDetail(num){
 function modifyDetail(day, oldDetail, newDetail, deleteFlag){
 	console.log('Params: old detail: ' + oldDetail);
 	console.log('New detail: ' + newDetail);
-	console.log(day.stats);
 	if(day.stats.length > 4){
 		var done = false;
 		// Locate detail
 		// start at index 4 so expected values are never changed
 		for(var i = 4; i<day.stats.length; i++){
 			// If the detail exists...
-			if (day.stats[i] == newDetail){
+			if (day.stats[i] == oldDetail){
 				console.log('Match:');
 				console.log( newDetail + ' matches existing detail ' + day.stats[i]);
 				if(deleteFlag){
 					console.log('Removing detail: ' + oldDetail);
 					// Remove the detail and the corresponding label
+					console.log('Removing element ' + i + ', ' + day.stats[i]);
+					console.log(day.stats);
 					day.stats.splice(i,1);
 					day.labels.splice(i,1);
 					console.log('done');
@@ -266,10 +264,61 @@ function failMessage(msg){
 	$('#comsField').text(msg);
 };
 
+// The regular expression was built with help from a 2016 tutorial by Jan Goyvaerts
+// Accessed September 2016
+// https://www.regular-expressions.info/dates.html
 function parseDate(str){
-	verified = 
-	result = Array();
+	// match 19** or 20**   			'^(19|20)\\d\\d'
+	// match 0* or 10,11,12 			'^(0[1-9]|1[012])'
+	// match 0* or 1* or 2* or 30,31 	'^(0[1-9]|[12][0-9]|3[01])'
+	// match delimiters '-' or '/'		'[-/]'
+
+	//line up with beginning of input, and find the patterns below
+	var date = str.match('^(0[1-9]|1[012])[-/](0[1-9]|[12][0-9]|3[01])[-/](19|20)\\d\\d');
+	if(date !== 'undefined' && date != null){
+		result = Array();
+		result.push(date[0].substring(3,5));
+		result.push(date[0].substring(0,2));
+		result.push(date[0].substring(6,10));
+		console.log('Returning result: ');
+		console.log(result);
+		return result;
+	}
+	return date;
 }
+
+
+// Button handler for jump to day
+$(function(){
+	$('#jump').click(function(){
+		console.log($('#jumpInput').val());
+		var date = parseDate($('#jumpInput').val());
+
+		if(date !== 'undefined' && date != null){
+			var data = serialize(['day','month','year'], date);
+			$.ajax({
+				url: 	 '/changeFocusDay',
+				data:    data,
+				type: 	 'POST',
+				success: function(reply){
+					// Once the server has confirmed a change, redirect
+					// Parse the JSON into an object
+					payload = JSON.parse(reply);
+					if (payload.status == 'OK'){
+						// redirect, cueing the server to display the updated day view
+						window.location.replace(payload.link);
+					}
+					else{
+						failMessage('We\'re experiencing difficulties processing your request.  Please check that your date is in the format mm/dd/yyyy and that it falls within the academic year.');
+						console.log('Bad status: ');
+						console.log(payload);
+					}
+				}
+			});// End ajax
+		} // end if defined
+	});
+});
+
 
 function saveChanges(currentDay){
 	// Send out an ajax call and assign callbacks to the reply
@@ -313,11 +362,10 @@ function sanitize(word){
 };
 
 function serialize(names,vals){
-	equals = '=';
 	delimiter = '&';
 	result = Array();
 	for(var i = 0; i < vals.length; i++){
-		result.push(names[i] + equals + vals[i])
+		result.push(names[i] + '=' + vals[i].replace(' ', '_'))
 	}
 	return result.join(delimiter)
 };

@@ -26,7 +26,6 @@ from flask import redirect			# Ability to override browser address request
 from flask import session			# Cookies to track the calendar for session
 from flask import url_for			# Let flask manage urls, we use function names
 from forms import LoginForm			# Import custom definition defined in forms.py
-from forms import DateForm			# Import custom date form
 from flask import request			# Allow access to HTTP requests
 from flask import json				# Prepare responses to requests for client
 from flask import logging			# Developer feedback
@@ -135,6 +134,8 @@ def index(view=None):
 		weekday = calendar_obj.getCurrentDay().weekday
 		date = calendar_obj.getCurrentDay().date
 		details = list(calendar_obj.getCurrentDay().details)
+		for i in details:
+			i.replace('_', ' ')
 		app.logger.info(details)
 		return render_template('day.html',
 								weekday=weekday,
@@ -303,8 +304,8 @@ def viewChange():
 # @param [in] JSON This is an implicit parameter passed along via Flask's
 #				   request construct.  It is reconstructed as a dictionary
 #				   on entry to this method.
-# @param [out] return Redirects to the index() method with the appropriate view
-#					  specified.
+# @param [out] return A JSON containing the status, and on success a link to index
+#					  with the appropriate view set.
 #
 # @details
 #		The changeFocusX methods handle changing the view when a specific day, week,
@@ -313,31 +314,39 @@ def viewChange():
 # focus.  Specifically, the currentDay, currentWeek, currentMonth, and currentYear members of
 # the Calendar class are updated.
 #
-# On completion the method will redirect directly to the appropriate view using the index method.
+# On completion the method will return a status and a link to the appropriate view using the index method.
 #
 # Assumes some combination of 'day', 'month', and 'year' are present and have values.
 # See individual implementations for the expected input.
 #
-@app.route('/changeFocusDay', methods=['POST'])
+@app.route('/changeFocusDay', methods=['GET','POST'])
 def changeFocusDay():
-	form = DateForm()
-	if form.validate_on_submit():	#if all our validation checks pass we have a string of form mm/dd/yyyy
-		day = int(form.date[3:5])
-		monthNum = int(form.date[:2])
-		year = int(form.date[6:])
-		month = calendar_obj.year1.months[monthNum+1].name
-	
+	try:
+		app.logger.info('In change focus day')
+		day = int(request.form['day'])
+		monthNum = int(request.form['month'])
+		year = int(request.form['year'])
+		month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][monthNum-1]
+
+		app.logger.info('Jumping to date: ' + month + ' ' + str(day) + ', ' + str(year))
+
 		# Find the new focus day and update current day, week, month, year
 		calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-		calendar_obj.currentDay = calendar_obj.getDay(day-1)
+		app.logger.info('Found month: ' + calendar_obj.currentMonth.name)
+		calendar_obj.currentDay = calendar_obj.currentMonth.getDay(day) or calendar_obj.currentMonth.days[0]
 		if calendar_obj.currentMonth.year == calendar_obj.year1.name:
 			calendar_obj.currentYear = calendar_obj.year1
 		else:
 			calendar_obj.currentYear = calendar_obj.year2
 		calendar_obj.currentWeek = calendar_obj.getCurrentWeek()
-	
-	# render the day view with the new day
-	return redirect(url_for('index', view='day'))
+
+		# return status and a link to redirect to
+		result = {'status':'OK', 'link':url_for('index', view='day')}
+		return json.dumps(result)
+	except:
+		app.logger.info(traceback.print_exc())
+		result = {'status':'BAD'}
+		return json.dumps(result)
 
 @app.route('/changeFocusMonth', methods=['POST'])
 def changeFocusMonth():
