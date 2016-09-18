@@ -50,9 +50,9 @@ class Year():
 		# of Gauss's algorithm, shown here:
 		# Accessed September, 2016
 		# https://en.wikipedia.org/wiki/Leap_year#Algorithm
-		y = name % 100
+		y = (name % 100) - 1
 		c = name // 100
-		weekOffset = int((1.4 + name + y/4 + c/4 - 2*c)%7)
+		weekOffset = int((2.4 + name + y/4 + c/4 - 2*c)%7) #30.4
 
 		dayCount = 0
 		for i in range(12):
