@@ -1,12 +1,56 @@
 {% extends 'base.html' %} # use the base template as a parent
 {% block mainBody %}
 	<!-- Verify that we have a calendar -->
-	{% if calendar %}
+	{% if user %}
+
+	</style>
 	<h1>Welcome, {{user}}!</h1>
 	<p>
 		Year details:<br>
-		{{calendar['currentDay']['day']}}, {{calendar['currentDay']['month']}} {{calendar['currentDay']['date']}}, {{calendar['name']}}<br>
+
 	</p>
+
+	<button class="btn" type="button" id="August"><img src="/static/img/1 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/2 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/3 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/4 2016.png"/></button> &nbsp;
+
+	<button class="btn" type="button" id="August"><img src="/static/img/1 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/2 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/3 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/4 2017.png"/></button>
+<br>
+	<button class="btn" type="button" id="August"><img src="/static/img/5 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/6 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/7 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/8 2016.png"/></button> &nbsp;
+
+	<button class="btn" type="button" id="August"><img src="/static/img/5 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/6 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/7 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/8 2017.png"/></button>
+<br>
+	<button class="btn" type="button" id="August"><img src="/static/img/9 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/10 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/11 2016.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/12 2016.png"/></button> &nbsp;
+
+	<button class="btn" type="button" id="August"><img src="/static/img/9 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/10 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/11 2017.png"/></button>
+	<button class="btn" type="button" id="August"><img src="/static/img/12 2017.png"/></button>
+	<br>
+	<style>
+	.btn{
+		height:100px;
+		width: 100px;
+	}
+	.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+	}
+	</style>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
 	<a href={{url_for('login')}}>Login Page</a>
