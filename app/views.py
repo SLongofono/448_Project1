@@ -35,8 +35,6 @@ import Calendar
 # TODO insert logfile i/o here
 calendar_obj	= Calendar.Calendar(2016, 2017, 'logfile.txt')
 calendar_obj.load()
-app.logger.info(calendar_obj.year1.name)
-app.logger.info(calendar_obj.getCurrentDay().details)
 
 @app.route('/deleteDetail')
 def delete():
@@ -58,11 +56,7 @@ def delete():
 		#Update log file
 		calendar_obj.save()
 
-		app.logger.info('This day state:')
-		app.logger.info(day_obj.details)
 
-		app.logger.info('Calendar obj state:')
-		app.logger.info(calendar_obj.getCurrentDay().details)
 	except:
 		# Log exception info on failure
 		app.logger.info(traceback.print_exc())
@@ -135,7 +129,7 @@ def index(view=None):
 		details = list(calendar_obj.getCurrentDay().details)
 		for i in details:
 			i.replace('_', ' ')
-		app.logger.info(details)
+
 		return render_template('day.html',
 								weekday=weekday,
 								date=date,
@@ -227,19 +221,12 @@ def process():
 		#Find the day
 		day_obj = calendar_obj.getCurrentDay()
 
-		app.logger.info('Changing details, old values:')
-		app.logger.info(day_obj.details)
+
 		day_obj.details = newDetails
-		app.logger.info('\nNew values:')
-		app.logger.info(day_obj.details)
+
 		#Update log file
 		calendar_obj.save()
 
-		app.logger.info('This day state:')
-		app.logger.info(day_obj.details)
-
-		app.logger.info('Calendar obj state:')
-		app.logger.info(calendar_obj.getCurrentDay().details)
 	except:
 		# Log exception info on failure
 		app.logger.info(traceback.print_exc())
@@ -293,8 +280,6 @@ def viewChange():
 			result = {'status':'OK', 'link':url_for('index',view='year')}
 
 	# Prepare a JSON response with a link for root
-	app.logger.info('Returning: ')
-	app.logger.info(result)
 	return json.dumps(result)
 
 ## @fn changeFocusX
@@ -320,17 +305,14 @@ def viewChange():
 @app.route('/changeFocusDay', methods=['GET','POST'])
 def changeFocusDay():
 	try:
-		app.logger.info('In change focus day')
 		day = int(request.form['day'])
 		monthNum = int(request.form['month'])
 		year = int(request.form['year'])
 		month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][monthNum-1]
 
-		app.logger.info('Jumping to date: ' + month + ' ' + str(day) + ', ' + str(year))
 
 		# Find the new focus day and update current day, week, month, year
 		calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-		app.logger.info('Found month: ' + calendar_obj.currentMonth.name)
 		calendar_obj.currentDay = calendar_obj.currentMonth.getDay(day) or calendar_obj.currentMonth.days[0]
 		if calendar_obj.currentMonth.year == calendar_obj.year1.name:
 			calendar_obj.currentYear = calendar_obj.year1
@@ -351,12 +333,8 @@ def changeFocusMonth():
 	try:
 		month = request.form['month']
 		year = int(request.form['year'])
-		app.logger.info(month)
-		app.logger.info(year)
 
 		calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-		app.logger.info('found month:')
-		app.logger.info(calendar_obj.currentMonth.name)
 
 		calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[1]
 		calendar_obj.currentDay = calendar_obj.currentWeek[4]
@@ -365,10 +343,8 @@ def changeFocusMonth():
 		else:
 			calendar_obj.currentYear = calendar_obj.year2
 
-		app.logger.info(calendar_obj.getCurrentDay().date)
-		app.logger.info(calendar_obj.getCurrentWeek())
+
 		result = {'status':'OK', 'link':url_for('index', view='month')}
-		app.logger.info(result)
 
 		#return status and a link to redirect to
 		return json.dumps(result)

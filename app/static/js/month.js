@@ -99,12 +99,6 @@ the failMessage function to communicate with the user if necessary.
 */
 $(function(){
 	$('.btn_month').click(function(){
-
-        for(var i = 0; i<months.length; i++){
-            console.log(months);
-        }
-        console.log(month);
-        alert('wait');
 		var payload = serialize(['day', 'month', 'year'], [$(this).attr('id'), (months.indexOf(month)+1), year]);
 		console.log(payload);
 		$.ajax({
