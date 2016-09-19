@@ -4,21 +4,13 @@
 	{% if user %}
 	<h1>Welcome, {{user}}!</h1>
 	<p>
-		{{month}}, {{year}}
+		{{month}}, {{year}}, {{days}}
 		Week  details:<br>
 		<div id="daysDiv">
-		{% if (days.length ==  7)%}
 			{%for day in days%}
-			<button class='btn'  style = "width: 200px" type = "button" id="Day"> {{day}} {{dayNames[loop.index]}}  </button>
+			<button class='btn'  style = "width: 200px" type = "button" id="Day"> {{day}} {{dayNames[loop.index-1]}} </button>
 			<br>
 			{%endfor%}
-		{%else%} // javascript
-			<div id="shortweek">
-                        	<button class='btn'  style = "width: 200px" type = "button" id="Day"> </button>
-			</div>
-                {%endif%}  			
-		</div>
-		
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -29,11 +21,9 @@
 	<div class="container" id="viewChange">
 		<button class='btn' type="button" id="day">Day View</button>
 		<button class='btn' type="button" id="month">Month View</button>
-	    <button class='btn' type="button" id="year">Year View</button>
+	  <button class='btn' type="button" id="year">Year View</button>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-
-
 
 <script>
 var weeks = {{weeks}};
@@ -41,26 +31,9 @@ var days = {{days}};
 var dayNames = {{dayNames}};
 var shortweekDiv = $("#shortweek");
 var actualLength = 7 - days.length();
-
-
-
 for (i=0;i<=actualLength;i++)
-	shortweekDiv.append(<button class='btn'  style = "width: 200px" type = "button" id="Day"> {{day}} {{dayNames[loop.index]}}  </button>)
+
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Button handler for views
 $(function(){
 	$('#viewChange').find('*').click(function(){
@@ -80,7 +53,7 @@ $(function(){
 					//window.location.replace("http://localhost:5000/");
 				}
 				else{
-					console.log('Bad status: ');
+					console.log('Bad status:');
 					console.log(payload);
 				}
 			}
