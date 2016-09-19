@@ -74,7 +74,7 @@
 # @subsection eight Calendar Images
 #
 # The calendar images in the year view were taken from the website
-# calendarpedia, under template 7
+# calendarpedia, under template 8
 #
 # Accessed September 2016,
 # http://www.calendarpedia.com/2016-calendar-pdf-templates.html
