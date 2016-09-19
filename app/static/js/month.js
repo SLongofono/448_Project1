@@ -7,6 +7,8 @@ This file describes the logic, helper methods, and server interaction methods fo
 the month view.  It is used alongside the day.html template to implement the month view.
 */
 
+var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+
 /*
 @fn generate_week_btns
 @brief Generates HTML for buttons representing days in a week
@@ -97,7 +99,13 @@ the failMessage function to communicate with the user if necessary.
 */
 $(function(){
 	$('.btn_month').click(function(){
-		var payload = serialize(['day', 'month', 'year'], [$(this).attr('id'), (months.indexOf('{{month}}')+1), year]);
+
+        for(var i = 0; i<months.length; i++){
+            console.log(months);
+        }
+        console.log(month);
+        alert('wait');
+		var payload = serialize(['day', 'month', 'year'], [$(this).attr('id'), (months.indexOf(month)+1), year]);
 		console.log(payload);
 		$.ajax({
 			url: 	 '/changeFocusDay',

@@ -25,7 +25,6 @@
 		<button class='btn' type="button" id="year">Year View</button>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-<script src="/static/js/month.js"></script>
 <script>
 
 // Setup Display
@@ -39,8 +38,8 @@ var allWeeks = Array();
 	allWeeks.push(temp);
 {% endfor %}
 
-var month = '{{month}}';
-var year = '{{year}}';
+month = '{{month}}';
+year = '{{year}}';
 var	names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 var firstDay = '{{firstDay}}'.substring(0,3);
@@ -49,7 +48,9 @@ var lastDay = '{{lastDay}}'.substring(0,3);
 //Globals for trimming days
 trim_front = names.indexOf(firstDay);
 trim_back = names.indexOf(lastDay);
-
+</script>
+<script src="/static/js/month.js"></script>
+<script>
 // Build html elements
 for(var i = 0; i <allWeeks.length; i++){
 	// Locate a week element
@@ -85,4 +86,5 @@ if(month != 'december' || year != '2017'){
 }
 
 </script>
+
 {% endblock %}
