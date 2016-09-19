@@ -1,0 +1,25 @@
+\hypertarget{____init_____8py}{}\section{\+\_\+\+\_\+init\+\_\+\+\_\+.\+py File Reference}
+\label{____init_____8py}\index{\+\_\+\+\_\+init\+\_\+\+\_\+.\+py@{\+\_\+\+\_\+init\+\_\+\+\_\+.\+py}}
+
+
+Decouples app instantiation and configuration from use.  
+
+
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries app.\+app} = Flask(\+\_\+\+\_\+name\+\_\+\+\_\+)\hypertarget{____init_____8py_a675b4ea702c13dc4b8c05f985a25b496}{}\label{____init_____8py_a675b4ea702c13dc4b8c05f985a25b496}
+
+\item 
+{\bfseries app.\+secret\+\_\+key}\hypertarget{____init_____8py_adca7658ff5c9024a5353574d2c01cbd2}{}\label{____init_____8py_adca7658ff5c9024a5353574d2c01cbd2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Decouples app instantiation and configuration from use. 
+
+\begin{DoxyAuthor}{Author}
+Stephen Longofono
+\end{DoxyAuthor}
+This module exists to decouple the Flask app object and its configuration from the views and other pieces of the project. It should not be run directly; it will be called by \textquotesingle{}run.\+py\textquotesingle{} when it has finished running its setup steps. 

@@ -1,0 +1,25 @@
+describes the function and purpose of the project\textquotesingle{}s Jinja template files
+
+\begin{DoxyAuthor}{Author}
+Stephen Longofono
+\end{DoxyAuthor}
+\hypertarget{template_dox_Files}{}\section{Template Files}\label{template_dox_Files}
+The project makes use of Jinja templates to generate uniform and dynamic H\+T\+ML and C\+SS for our web application. Each of the calendar views has its own format, which is rendered by flask from the \hyperlink{views_8py}{views.\+py} script. They are documented here, because there is no great way to place and interpret doxygen hooks in the form of H\+T\+ML comments.
+
+See the links below for the Javascript files themselves -\/ within are detailed descriptions of each of the helper functions which would be included here if Doxygen supported Javascript.
+
+Adapted from templates in a 2012 Flask tutorial written by Miguel Grinberg Accessed September 2016 \href{https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world/}{\tt https\+://blog.\+miguelgrinberg.\+com/post/the-\/flask-\/mega-\/tutorial-\/part-\/i-\/hello-\/world/}\hypertarget{template_dox_base}{}\subsection{base.\+html}\label{template_dox_base}
+The base H\+T\+ML template defines all common elements for the web application. It includes the navigation, images, styling, and layout which all other pages inherit. It also defines the dynamic blocks which inheriting templates will define.\hypertarget{template_dox_day}{}\subsection{day.\+html}\label{template_dox_day}
+The day H\+T\+ML template renders calendar elements associated with the day view, including data from the calendar object and forms/buttons for interacting with the application.
+
+\href{https://github.com/SLongofono/448_Project1/blob/master/app/static/js/day.js}{\tt day.\+js Javascript documentation}\hypertarget{template_dox_login}{}\subsection{login.\+html}\label{template_dox_login}
+The login H\+T\+ML template renders a login form and any feedback messages passed along via flash.\hypertarget{template_dox_month}{}\subsection{month.\+html}\label{template_dox_month}
+The month H\+T\+ML template renders calendar elements associated with the month view, including data from the calendar object and forms/buttons for interacting with the application.
+
+\href{https://github.com/SLongofono/448_Project1/blob/master/app/static/js/month.js}{\tt month.\+js Javascript documentation}\hypertarget{template_dox_week}{}\subsection{week.\+html}\label{template_dox_week}
+The week H\+T\+ML template renders calendar elements associated with the week view, including data from the calendar object and forms/buttons for interacting with the application.
+
+\href{https://github.com/SLongofono/448_Project1/blob/master/app/static/js/week.js}{\tt week.\+js Javascript documentation}\hypertarget{template_dox_year}{}\subsection{year.\+html}\label{template_dox_year}
+The year H\+T\+ML template renders calendar elements associated with the year view, including data from the calendar object and forms/buttons for interacting with the application.
+
+\href{https://github.com/SLongofono/448_Project1/blob/master/app/static/js/year.js}{\tt year.\+js Javascript documentation} 

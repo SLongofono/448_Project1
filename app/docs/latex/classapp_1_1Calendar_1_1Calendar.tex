@@ -1,0 +1,204 @@
+\hypertarget{classapp_1_1Calendar_1_1Calendar}{}\section{app.\+Calendar.\+Calendar Class Reference}
+\label{classapp_1_1Calendar_1_1Calendar}\index{app.\+Calendar.\+Calendar@{app.\+Calendar.\+Calendar}}
+
+
+Holds two years, and keeps track of the currently selected day.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_add1e425ef43b2991978b93e2b4b5b76a}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, first\+Year, second\+Year, file\+Name)
+\begin{DoxyCompactList}\small\item\em Initializes a \hyperlink{classapp_1_1Calendar_1_1Calendar}{Calendar} object. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_aae410a1a0dbb4c0f016d82c39953af97}{get\+Current\+Day} (self)
+\begin{DoxyCompactList}\small\item\em Gets the current\+Day. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_afe4714f652fbd416728a294e1031a2ab}{get\+Current\+Week} (self)
+\begin{DoxyCompactList}\small\item\em Gets the week associated with the current day. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_ad090e5f4c69719d7e080d1845a92d03a}{get\+Current\+Month} (self)
+\begin{DoxyCompactList}\small\item\em Gets the month which the current\+Day belongs to. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_afd772165ac444471a9d1b563c82b8b3a}{get\+Current\+Year} (self)
+\begin{DoxyCompactList}\small\item\em Gets the year which the current\+Day belongs to. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_abf784f86c98b145f815b3042b3d7af7a}{get\+Year} (self, year\+Name)
+\begin{DoxyCompactList}\small\item\em Gets a year based on the integer value. \end{DoxyCompactList}\item 
+def {\bfseries get\+Month} (self, month\+Name, year\+Name)\hypertarget{classapp_1_1Calendar_1_1Calendar_aec6c78b6d635b2112b9153055080a3ab}{}\label{classapp_1_1Calendar_1_1Calendar_aec6c78b6d635b2112b9153055080a3ab}
+
+\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_a7269addb3cb46f6b2dcbf803f6a944c3}{load} (self)
+\begin{DoxyCompactList}\small\item\em reads through a file, interpets the data, and edits it own contents to match \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Calendar_1_1Calendar_abbca0136c829cf9635d2cf5d464bb6da}{save} (self)
+\begin{DoxyCompactList}\small\item\em creates/overwrites a file and saves the details of its days \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries year1}\hypertarget{classapp_1_1Calendar_1_1Calendar_a69b07684562125498bed12d6d79eb248}{}\label{classapp_1_1Calendar_1_1Calendar_a69b07684562125498bed12d6d79eb248}
+
+\item 
+{\bfseries year2}\hypertarget{classapp_1_1Calendar_1_1Calendar_acf478f7f16da4058a14ddb8bba85203d}{}\label{classapp_1_1Calendar_1_1Calendar_acf478f7f16da4058a14ddb8bba85203d}
+
+\item 
+{\bfseries file\+Name}\hypertarget{classapp_1_1Calendar_1_1Calendar_aac31ffbe15c5a0efe0f16b4f0977b5ed}{}\label{classapp_1_1Calendar_1_1Calendar_aac31ffbe15c5a0efe0f16b4f0977b5ed}
+
+\item 
+{\bfseries current\+Day}\hypertarget{classapp_1_1Calendar_1_1Calendar_a868521f7e6750e69a758b712c73fd573}{}\label{classapp_1_1Calendar_1_1Calendar_a868521f7e6750e69a758b712c73fd573}
+
+\item 
+{\bfseries current\+Week}\hypertarget{classapp_1_1Calendar_1_1Calendar_a13be231c54e4e231876a55083e26a2e2}{}\label{classapp_1_1Calendar_1_1Calendar_a13be231c54e4e231876a55083e26a2e2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds two years, and keeps track of the currently selected day. 
+
+\begin{DoxyAuthor}{Author}
+Grant Jurgensen
+\end{DoxyAuthor}
+Because there are multiple years to keep track of, this class acts as a container of all the years (and therefore acts as a bridge to the associated months/weeks/days). It is through this class that you can keep track of and access all your calendar related objects, and select a current day on which to focus. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, first\+Year, second\+Year, file\+Name)}{\_\_init\_\_(self, firstYear, secondYear, fileName)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{first\+Year, }
+\item[{}]{second\+Year, }
+\item[{}]{file\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_add1e425ef43b2991978b93e2b4b5b76a}{}\label{classapp_1_1Calendar_1_1Calendar_add1e425ef43b2991978b93e2b4b5b76a}
+
+
+Initializes a \hyperlink{classapp_1_1Calendar_1_1Calendar}{Calendar} object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em first\+Year} & An integer value of the first year to be created \\
+\hline
+\mbox{\tt in}  & {\em second\+Year} & An integer value of the second year to be created \\
+\hline
+\mbox{\tt in}  & {\em file\+Name} & The file name which will be used to save and load information in order to rebuild the \hyperlink{classapp_1_1Calendar_1_1Calendar}{Calendar} object in the future \\
+\hline
+\mbox{\tt out}  & {\em return} & The initialized \hyperlink{classapp_1_1Calendar_1_1Calendar}{Calendar} object\\
+\hline
+\end{DoxyParams}
+Initializes a \hyperlink{classapp_1_1Calendar_1_1Calendar}{Calendar} object. Initializes two Year objects based on the first\+Year and second\+Year arguments and stores the file\+Name which will be used to save and load information from a local file. 
+
+\subsection{Member Function Documentation}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!get\+Current\+Day@{get\+Current\+Day}}
+\index{get\+Current\+Day@{get\+Current\+Day}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{get\+Current\+Day(self)}{getCurrentDay(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+get\+Current\+Day (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_aae410a1a0dbb4c0f016d82c39953af97}{}\label{classapp_1_1Calendar_1_1Calendar_aae410a1a0dbb4c0f016d82c39953af97}
+
+
+Gets the current\+Day. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em return} & The current\+Day member variable \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!get\+Current\+Month@{get\+Current\+Month}}
+\index{get\+Current\+Month@{get\+Current\+Month}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{get\+Current\+Month(self)}{getCurrentMonth(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+get\+Current\+Month (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_ad090e5f4c69719d7e080d1845a92d03a}{}\label{classapp_1_1Calendar_1_1Calendar_ad090e5f4c69719d7e080d1845a92d03a}
+
+
+Gets the month which the current\+Day belongs to. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em return} & the month object which owns current\+Day \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!get\+Current\+Week@{get\+Current\+Week}}
+\index{get\+Current\+Week@{get\+Current\+Week}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{get\+Current\+Week(self)}{getCurrentWeek(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+get\+Current\+Week (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_afe4714f652fbd416728a294e1031a2ab}{}\label{classapp_1_1Calendar_1_1Calendar_afe4714f652fbd416728a294e1031a2ab}
+
+
+Gets the week associated with the current day. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em return} & A list of days ordered as a consecutive week (sunday-\/saturday), with current\+Day being one of the days in the list. \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!get\+Current\+Year@{get\+Current\+Year}}
+\index{get\+Current\+Year@{get\+Current\+Year}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{get\+Current\+Year(self)}{getCurrentYear(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+get\+Current\+Year (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_afd772165ac444471a9d1b563c82b8b3a}{}\label{classapp_1_1Calendar_1_1Calendar_afd772165ac444471a9d1b563c82b8b3a}
+
+
+Gets the year which the current\+Day belongs to. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em return} & the year object which owns current\+Day \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!get\+Year@{get\+Year}}
+\index{get\+Year@{get\+Year}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{get\+Year(self, year\+Name)}{getYear(self, yearName)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+get\+Year (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{year\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_abf784f86c98b145f815b3042b3d7af7a}{}\label{classapp_1_1Calendar_1_1Calendar_abf784f86c98b145f815b3042b3d7af7a}
+
+
+Gets a year based on the integer value. 
+
+Gets a month based on the integer value for the year and string of the month name.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em year\+Name} & An integer value of the year you are looking for \\
+\hline
+\mbox{\tt out}  & {\em return} & The year object associated with the integer value if one exists\\
+\hline
+\mbox{\tt in}  & {\em month\+Name} & A string value of the month name for the month you are looking for \\
+\hline
+\mbox{\tt in}  & {\em year\+Name} & An integer value of the year you are looking for \\
+\hline
+\mbox{\tt out}  & {\em return} & The month object associated with month\+Name and year\+Name \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!load@{load}}
+\index{load@{load}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{load(self)}{load(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+load (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_a7269addb3cb46f6b2dcbf803f6a944c3}{}\label{classapp_1_1Calendar_1_1Calendar_a7269addb3cb46f6b2dcbf803f6a944c3}
+
+
+reads through a file, interpets the data, and edits it own contents to match 
+
+Trys to open the file. If it succeeds, it proceeds to read through the textfile, look for day data and details for that day, and as it recognises this data, add the details to the days it currently possesses. \index{app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}!save@{save}}
+\index{save@{save}!app\+::\+Calendar\+::\+Calendar@{app\+::\+Calendar\+::\+Calendar}}
+\subsubsection[{\texorpdfstring{save(self)}{save(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Calendar.\+Calendar.\+save (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Calendar_1_1Calendar_abbca0136c829cf9635d2cf5d464bb6da}{}\label{classapp_1_1Calendar_1_1Calendar_abbca0136c829cf9635d2cf5d464bb6da}
+
+
+creates/overwrites a file and saves the details of its days 
+
+Creates a new file or overwrites an existing file. It then scans through its owns days, and for each day with at least one detail, logs information about the day and its details in order to replicate the data in the future. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Calendar_8py}{Calendar.\+py}\end{DoxyCompactItemize}

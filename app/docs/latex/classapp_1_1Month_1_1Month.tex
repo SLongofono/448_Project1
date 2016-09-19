@@ -1,0 +1,143 @@
+\hypertarget{classapp_1_1Month_1_1Month}{}\section{app.\+Month.\+Month Class Reference}
+\label{classapp_1_1Month_1_1Month}\index{app.\+Month.\+Month@{app.\+Month.\+Month}}
+
+
+A month which possesses a list of days, and calculates lists of weeks.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classapp_1_1Month_1_1Month_a37375e0ac2693a9b4701dacd7de23a5a}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, name, days, year)
+\begin{DoxyCompactList}\small\item\em Initializes a month object. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Month_1_1Month_a0577a1a22deaa2fba3b7e3f4a7aecabb}{set\+Prev} (self, month)
+\begin{DoxyCompactList}\small\item\em sets the previous month, updates the first week \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Month_1_1Month_aa2f066e84d3a0118b9279ac18adc53d0}{set\+Next} (self, month)
+\begin{DoxyCompactList}\small\item\em sets the next month, updates the last week \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Month_1_1Month_aa4cb140eba9322590e2e20e6366b6ef7}{get\+Day} (self, date)
+\begin{DoxyCompactList}\small\item\em Gets the day at a certain date. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries name}\hypertarget{classapp_1_1Month_1_1Month_ad8bb2df501f5c1371b5315c2f6e3035f}{}\label{classapp_1_1Month_1_1Month_ad8bb2df501f5c1371b5315c2f6e3035f}
+
+\item 
+{\bfseries days}\hypertarget{classapp_1_1Month_1_1Month_ae9e6419b902f69c5a08866a2d598dfca}{}\label{classapp_1_1Month_1_1Month_ae9e6419b902f69c5a08866a2d598dfca}
+
+\item 
+{\bfseries num\+Days}\hypertarget{classapp_1_1Month_1_1Month_ae05ee940bd515dbf90455ab77221a785}{}\label{classapp_1_1Month_1_1Month_ae05ee940bd515dbf90455ab77221a785}
+
+\item 
+{\bfseries year}\hypertarget{classapp_1_1Month_1_1Month_a6b1efc7cf987876f70dda6540dd5ff7b}{}\label{classapp_1_1Month_1_1Month_a6b1efc7cf987876f70dda6540dd5ff7b}
+
+\item 
+{\bfseries weeks}\hypertarget{classapp_1_1Month_1_1Month_aa7666a88a2282ba3172d2fdc3f26c301}{}\label{classapp_1_1Month_1_1Month_aa7666a88a2282ba3172d2fdc3f26c301}
+
+\item 
+{\bfseries prev}\hypertarget{classapp_1_1Month_1_1Month_a53b0c7e0822baa2ec552d7fbd52625c1}{}\label{classapp_1_1Month_1_1Month_a53b0c7e0822baa2ec552d7fbd52625c1}
+
+\item 
+{\bfseries next}\hypertarget{classapp_1_1Month_1_1Month_ada35442c38ecaadf5a299f6295ead36e}{}\label{classapp_1_1Month_1_1Month_ada35442c38ecaadf5a299f6295ead36e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A month which possesses a list of days, and calculates lists of weeks. 
+
+\begin{DoxyAuthor}{Author}
+Grant Jurgensen
+\end{DoxyAuthor}
+A container for a month, holds the associated days, as well as weeks within it. In order for the weeks to all be full (7 days, sunday-\/saturday), the month must be made aware of its previous and next months. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, name, days, year)}{\_\_init\_\_(self, name, days, year)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Month.\+Month.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{name, }
+\item[{}]{days, }
+\item[{}]{year}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Month_1_1Month_a37375e0ac2693a9b4701dacd7de23a5a}{}\label{classapp_1_1Month_1_1Month_a37375e0ac2693a9b4701dacd7de23a5a}
+
+
+Initializes a month object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & A string value of the month\textquotesingle{}s name, e.\+g \textquotesingle{}January\textquotesingle{} \\
+\hline
+\mbox{\tt in}  & {\em days} & A list of days which the month contains \\
+\hline
+\mbox{\tt in}  & {\em year} & The year object that the month belongs to \\
+\hline
+\mbox{\tt out}  & {\em return} & The initialized month object\\
+\hline
+\end{DoxyParams}
+Initializes a \hyperlink{classapp_1_1Month_1_1Month}{Month} object. Stores its name, year, and days. Creates a first draft of its weeks (The weeks won\textquotesingle{}t neccessary be full until the month is made aware of its previous and next month). 
+
+\subsection{Member Function Documentation}
+\index{app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}!get\+Day@{get\+Day}}
+\index{get\+Day@{get\+Day}!app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}}
+\subsubsection[{\texorpdfstring{get\+Day(self, date)}{getDay(self, date)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Month.\+Month.\+get\+Day (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{date}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Month_1_1Month_aa4cb140eba9322590e2e20e6366b6ef7}{}\label{classapp_1_1Month_1_1Month_aa4cb140eba9322590e2e20e6366b6ef7}
+
+
+Gets the day at a certain date. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em date} & An integer value, the date of the day, e.\+g 5 for the 5th \\
+\hline
+\mbox{\tt out}  & {\em return} & Returns the day if the date was within the bounds of the month otherwise it returns None \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}!set\+Next@{set\+Next}}
+\index{set\+Next@{set\+Next}!app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}}
+\subsubsection[{\texorpdfstring{set\+Next(self, month)}{setNext(self, month)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Month.\+Month.\+set\+Next (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{month}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Month_1_1Month_aa2f066e84d3a0118b9279ac18adc53d0}{}\label{classapp_1_1Month_1_1Month_aa2f066e84d3a0118b9279ac18adc53d0}
+
+
+sets the next month, updates the last week 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em month} & The month object which imidiately follows this month \\
+\hline
+\mbox{\tt out}  & {\em return} & Returns true if it was able to complete the last week, false otherwise\\
+\hline
+\end{DoxyParams}
+Sets the next month, and then if the last week of the month isn\textquotesingle{}t already full, it will work forward and continuously add to the back of the last week until it reaches \char`\"{}\+Saturday\char`\"{}. Returns true if successful, false otherwise \index{app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}!set\+Prev@{set\+Prev}}
+\index{set\+Prev@{set\+Prev}!app\+::\+Month\+::\+Month@{app\+::\+Month\+::\+Month}}
+\subsubsection[{\texorpdfstring{set\+Prev(self, month)}{setPrev(self, month)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Month.\+Month.\+set\+Prev (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{month}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Month_1_1Month_a0577a1a22deaa2fba3b7e3f4a7aecabb}{}\label{classapp_1_1Month_1_1Month_a0577a1a22deaa2fba3b7e3f4a7aecabb}
+
+
+sets the previous month, updates the first week 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em month} & The month object which proceeds this month \\
+\hline
+\mbox{\tt out}  & {\em return} & Returns true if it was able to complete the first week, false otherwise\\
+\hline
+\end{DoxyParams}
+Sets the previous month, and then if the first week of the month isn\textquotesingle{}t already full, it will work backwards and continuously add to the front of the first week until it reaches \char`\"{}\+Sunday\char`\"{}. Returns true if successful, false otherwise 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Month_8py}{Month.\+py}\end{DoxyCompactItemize}

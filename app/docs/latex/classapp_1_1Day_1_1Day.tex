@@ -1,0 +1,171 @@
+\hypertarget{classapp_1_1Day_1_1Day}{}\section{app.\+Day.\+Day Class Reference}
+\label{classapp_1_1Day_1_1Day}\index{app.\+Day.\+Day@{app.\+Day.\+Day}}
+
+
+A day with a list of details.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classapp_1_1Day_1_1Day_a976cc9e6313247be8da7a45c9ed221a1}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, weekday, date, details)
+\begin{DoxyCompactList}\small\item\em Initializes a day object. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Day_1_1Day_ada42cf0b2378c6ce639a62324db7b87c}{add\+Detail} (self, detail)
+\begin{DoxyCompactList}\small\item\em Adds a detail to end of the detail list. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Day_1_1Day_adf6f3737b59a1f82eb3ec2f1b9bb00a1}{edit\+Detail} (self, idx, detail)
+\begin{DoxyCompactList}\small\item\em Replaces a detail with a new string value. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Day_1_1Day_a67aa22e13dfde0424c3a552cb1932bd3}{remove\+Detail} (self, idx)
+\begin{DoxyCompactList}\small\item\em Removes a specific detail. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Day_1_1Day_a01f8d1b7d230c920f93164ab55f832cc}{get\+Prev} (self)
+\begin{DoxyCompactList}\small\item\em Gets the previous day. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Day_1_1Day_ad22db62f8baf4aa6191769f2fcf07255}{get\+Next} (self)
+\begin{DoxyCompactList}\small\item\em Gets the next day. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries month}\hypertarget{classapp_1_1Day_1_1Day_a2af49be2138e4b6f1eb10504cacb519c}{}\label{classapp_1_1Day_1_1Day_a2af49be2138e4b6f1eb10504cacb519c}
+
+\item 
+{\bfseries weekday}\hypertarget{classapp_1_1Day_1_1Day_afa9de1d8f51e5ef62eedf39c024fa348}{}\label{classapp_1_1Day_1_1Day_afa9de1d8f51e5ef62eedf39c024fa348}
+
+\item 
+{\bfseries date}\hypertarget{classapp_1_1Day_1_1Day_acf3634a4b483442fe218b5f840e135fd}{}\label{classapp_1_1Day_1_1Day_acf3634a4b483442fe218b5f840e135fd}
+
+\item 
+{\bfseries details}\hypertarget{classapp_1_1Day_1_1Day_a4ab4f0c25f5cf57a160a5eec5dca85a2}{}\label{classapp_1_1Day_1_1Day_a4ab4f0c25f5cf57a160a5eec5dca85a2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A day with a list of details. 
+
+\begin{DoxyAuthor}{Author}
+Grant Jurgensen
+\end{DoxyAuthor}
+A container for a single day. It is aware of its date, weekday, and details, as well as the month it belongs to. It provides methods by which to modify its list of details 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, weekday, date, details)}{\_\_init\_\_(self, weekday, date, details)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Day.\+Day.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{weekday, }
+\item[{}]{date, }
+\item[{}]{details}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Day_1_1Day_a976cc9e6313247be8da7a45c9ed221a1}{}\label{classapp_1_1Day_1_1Day_a976cc9e6313247be8da7a45c9ed221a1}
+
+
+Initializes a day object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em weekday} & A string value of day of the week this day falls on, e.\+g. \char`\"{}\+Saturday\char`\"{} \\
+\hline
+\mbox{\tt in}  & {\em date} & An integer value corresponding to its order in the month \\
+\hline
+\mbox{\tt in}  & {\em details} & A list of string values, or \char`\"{}details\char`\"{} associated with the day \\
+\hline
+\mbox{\tt out}  & {\em return} & The initialized day object\\
+\hline
+\end{DoxyParams}
+Initializes a \hyperlink{classapp_1_1Day_1_1Day}{Day} object. Stores its weekday, date, and initial details. If it does not have any initial details, it will create an empty list for them. 
+
+\subsection{Member Function Documentation}
+\index{app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}!add\+Detail@{add\+Detail}}
+\index{add\+Detail@{add\+Detail}!app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}}
+\subsubsection[{\texorpdfstring{add\+Detail(self, detail)}{addDetail(self, detail)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Day.\+Day.\+add\+Detail (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{detail}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Day_1_1Day_ada42cf0b2378c6ce639a62324db7b87c}{}\label{classapp_1_1Day_1_1Day_ada42cf0b2378c6ce639a62324db7b87c}
+
+
+Adds a detail to end of the detail list. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em detail} & A string value you wish to add to the list of details \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}!edit\+Detail@{edit\+Detail}}
+\index{edit\+Detail@{edit\+Detail}!app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}}
+\subsubsection[{\texorpdfstring{edit\+Detail(self, idx, detail)}{editDetail(self, idx, detail)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Day.\+Day.\+edit\+Detail (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{idx, }
+\item[{}]{detail}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Day_1_1Day_adf6f3737b59a1f82eb3ec2f1b9bb00a1}{}\label{classapp_1_1Day_1_1Day_adf6f3737b59a1f82eb3ec2f1b9bb00a1}
+
+
+Replaces a detail with a new string value. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em idx} & The index of the detail which should be replaced \\
+\hline
+\mbox{\tt in}  & {\em detail} & A string value you wish to replace the detail with \\
+\hline
+\mbox{\tt out}  & {\em return} & Returns true if successful, false otherwise \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}!get\+Next@{get\+Next}}
+\index{get\+Next@{get\+Next}!app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}}
+\subsubsection[{\texorpdfstring{get\+Next(self)}{getNext(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Day.\+Day.\+get\+Next (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Day_1_1Day_ad22db62f8baf4aa6191769f2fcf07255}{}\label{classapp_1_1Day_1_1Day_ad22db62f8baf4aa6191769f2fcf07255}
+
+
+Gets the next day. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em return} & Returns the day object that imidiately follows it \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}!get\+Prev@{get\+Prev}}
+\index{get\+Prev@{get\+Prev}!app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}}
+\subsubsection[{\texorpdfstring{get\+Prev(self)}{getPrev(self)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Day.\+Day.\+get\+Prev (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Day_1_1Day_a01f8d1b7d230c920f93164ab55f832cc}{}\label{classapp_1_1Day_1_1Day_a01f8d1b7d230c920f93164ab55f832cc}
+
+
+Gets the previous day. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em return} & Returns the day object that precedes it \\
+\hline
+\end{DoxyParams}
+\index{app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}!remove\+Detail@{remove\+Detail}}
+\index{remove\+Detail@{remove\+Detail}!app\+::\+Day\+::\+Day@{app\+::\+Day\+::\+Day}}
+\subsubsection[{\texorpdfstring{remove\+Detail(self, idx)}{removeDetail(self, idx)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Day.\+Day.\+remove\+Detail (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{idx}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Day_1_1Day_a67aa22e13dfde0424c3a552cb1932bd3}{}\label{classapp_1_1Day_1_1Day_a67aa22e13dfde0424c3a552cb1932bd3}
+
+
+Removes a specific detail. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em idx} & The index of the detail which should be removed \\
+\hline
+\mbox{\tt out}  & {\em return} & Returns true if successful, false otherwise \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Day_8py}{Day.\+py}\end{DoxyCompactItemize}

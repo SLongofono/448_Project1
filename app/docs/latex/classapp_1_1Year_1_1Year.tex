@@ -1,0 +1,124 @@
+\hypertarget{classapp_1_1Year_1_1Year}{}\section{app.\+Year.\+Year Class Reference}
+\label{classapp_1_1Year_1_1Year}\index{app.\+Year.\+Year@{app.\+Year.\+Year}}
+
+
+Generates a year, including the months, weeks, and days contained with in it.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classapp_1_1Year_1_1Year_a7137b85e17cf71cb61a4eaf1b46be837}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, name)
+\begin{DoxyCompactList}\small\item\em Initializes a \hyperlink{classapp_1_1Year_1_1Year}{Year} object. \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Year_1_1Year_a4fc579bd5b473c0898ae41902b084f80}{set\+Prev} (self, year)
+\begin{DoxyCompactList}\small\item\em makes the year object aware of its previous year \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Year_1_1Year_aa68562faa318617f6c4c90919d27d195}{set\+Next} (self, year)
+\begin{DoxyCompactList}\small\item\em makes the year object aware of the next year \end{DoxyCompactList}\item 
+def \hyperlink{classapp_1_1Year_1_1Year_ad1d40047ed4bff44be11156937427ceb}{get\+Month} (self, month\+Name)
+\begin{DoxyCompactList}\small\item\em gets the month object via the name of the month \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries name}\hypertarget{classapp_1_1Year_1_1Year_acea84e2a70bc0ee6dcf861844d07d0ce}{}\label{classapp_1_1Year_1_1Year_acea84e2a70bc0ee6dcf861844d07d0ce}
+
+\item 
+{\bfseries months}\hypertarget{classapp_1_1Year_1_1Year_a9fb96c5085ea992d63f8b101874d2598}{}\label{classapp_1_1Year_1_1Year_a9fb96c5085ea992d63f8b101874d2598}
+
+\item 
+{\bfseries prev}\hypertarget{classapp_1_1Year_1_1Year_a605ebe3be0030f87084b98e2b76bd5b6}{}\label{classapp_1_1Year_1_1Year_a605ebe3be0030f87084b98e2b76bd5b6}
+
+\item 
+{\bfseries next}\hypertarget{classapp_1_1Year_1_1Year_ab3c168ef1e6412e3dbb719cf7928e6b3}{}\label{classapp_1_1Year_1_1Year_ab3c168ef1e6412e3dbb719cf7928e6b3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Generates a year, including the months, weeks, and days contained with in it. 
+
+\begin{DoxyAuthor}{Author}
+Grant Jurgensen
+\end{DoxyAuthor}
+Generates a full year (January 1st through December 31), and auto-\/fills itself with the months and days within it. It can \char`\"{}link\char`\"{} with other years, so that the weeks within its months are able to bleed over between the year boundaries. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, name)}{\_\_init\_\_(self, name)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Year.\+Year.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Year_1_1Year_a7137b85e17cf71cb61a4eaf1b46be837}{}\label{classapp_1_1Year_1_1Year_a7137b85e17cf71cb61a4eaf1b46be837}
+
+
+Initializes a \hyperlink{classapp_1_1Year_1_1Year}{Year} object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & An integer value corresponding to the year, e.\+g. 2016 \\
+\hline
+\mbox{\tt out}  & {\em return} & The initialized \hyperlink{classapp_1_1Year_1_1Year}{Year} object\\
+\hline
+\end{DoxyParams}
+Initializes a \hyperlink{classapp_1_1Year_1_1Year}{Year} object. Calculates whether it is a leap year, and adjusts the months lengths if so. Calculates the weekday of the first day of the year in order to have a reference point for all future days created. Iterates through 12 months, creates each month and fills it with the appropriate days. 
+
+\subsection{Member Function Documentation}
+\index{app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}!get\+Month@{get\+Month}}
+\index{get\+Month@{get\+Month}!app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}}
+\subsubsection[{\texorpdfstring{get\+Month(self, month\+Name)}{getMonth(self, monthName)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Year.\+Year.\+get\+Month (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{month\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Year_1_1Year_ad1d40047ed4bff44be11156937427ceb}{}\label{classapp_1_1Year_1_1Year_ad1d40047ed4bff44be11156937427ceb}
+
+
+gets the month object via the name of the month 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em month\+Name} & A string value for name of the month \\
+\hline
+\mbox{\tt out}  & {\em return} & Returns the month object of that name, or if none is found, None\\
+\hline
+\end{DoxyParams}
+Searches all of its months looking for a match to the month\+Name argument. If it finds one, it will return that month. Otherwise, it will return None. \index{app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}!set\+Next@{set\+Next}}
+\index{set\+Next@{set\+Next}!app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}}
+\subsubsection[{\texorpdfstring{set\+Next(self, year)}{setNext(self, year)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Year.\+Year.\+set\+Next (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{year}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Year_1_1Year_aa68562faa318617f6c4c90919d27d195}{}\label{classapp_1_1Year_1_1Year_aa68562faa318617f6c4c90919d27d195}
+
+
+makes the year object aware of the next year 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em year} & A year object which imidiately follows this year object\\
+\hline
+\end{DoxyParams}
+In order for the weeks within the months to be full weeks (sunday-\/saturday), the year object must be aware of its next year. This way the weeks may bleed over into the next year if neccessary \index{app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}!set\+Prev@{set\+Prev}}
+\index{set\+Prev@{set\+Prev}!app\+::\+Year\+::\+Year@{app\+::\+Year\+::\+Year}}
+\subsubsection[{\texorpdfstring{set\+Prev(self, year)}{setPrev(self, year)}}]{\setlength{\rightskip}{0pt plus 5cm}app.\+Year.\+Year.\+set\+Prev (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{year}
+\end{DoxyParamCaption}
+)}\hypertarget{classapp_1_1Year_1_1Year_a4fc579bd5b473c0898ae41902b084f80}{}\label{classapp_1_1Year_1_1Year_a4fc579bd5b473c0898ae41902b084f80}
+
+
+makes the year object aware of its previous year 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em year} & A year object which that precedes this year object\\
+\hline
+\end{DoxyParams}
+In order for the weeks within the months to be full weeks (sunday-\/saturday), the year object must be aware of its previous year. This way the weeks may bleed over into the previous year if neccessary 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Year_8py}{Year.\+py}\end{DoxyCompactItemize}
