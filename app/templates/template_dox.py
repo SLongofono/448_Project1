@@ -9,6 +9,9 @@
 # by flask from the views.py script.  They are documented here, because there is no great
 # way to place and interpret doxygen hooks in the form of HTML comments.
 #
+# See the files tab for the files themselves - within are detailed descriptions
+# of each of the helper functions
+#
 # Adapted from templates in a 2012 Flask tutorial written by Miguel Grinberg
 # Accessed September 2016
 # https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world/
@@ -43,4 +46,3 @@
 # The year HTML template renders calendar elements associated with the year view, including data
 # from the calendar object and forms/buttons for interacting with the application.
 #
-
