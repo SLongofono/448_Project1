@@ -9,8 +9,8 @@
 # by flask from the views.py script.  They are documented here, because there is no great
 # way to place and interpret doxygen hooks in the form of HTML comments.
 #
-# See the files tab for the files themselves - within are detailed descriptions
-# of each of the helper functions
+# See the links below for the Javascript files themselves - within are detailed descriptions
+# of each of the helper functions which would be included here if Doxygen supported Javascript.
 #
 # Adapted from templates in a 2012 Flask tutorial written by Miguel Grinberg
 # Accessed September 2016
@@ -27,6 +27,8 @@
 # The day HTML template renders calendar elements associated with the day view, including data
 # from the calendar object and forms/buttons for interacting with the application.
 #
+# <a href="https://github.com/SLongofono/448_Project1/blob/master/app/static/js/day.js">day.js Javascript documentation</a>
+#
 # @subsection login login.html
 #
 # The login HTML template renders a login form and any feedback messages passed along via flash.
@@ -36,13 +38,21 @@
 # The month HTML template renders calendar elements associated with the month view, including data
 # from the calendar object and forms/buttons for interacting with the application.
 #
+# <a href="https://github.com/SLongofono/448_Project1/blob/master/app/static/js/month.js">month.js Javascript documentation</a>
+#
+#
 # @subsection week week.html
 #
 # The week HTML template renders calendar elements associated with the week view, including data
 # from the calendar object and forms/buttons for interacting with the application.
 #
+# <a href="https://github.com/SLongofono/448_Project1/blob/master/app/static/js/week.js">week.js Javascript documentation</a>
+#
+#
 # @subsection year year.html
 #
 # The year HTML template renders calendar elements associated with the year view, including data
 # from the calendar object and forms/buttons for interacting with the application.
+#
+# <a href="https://github.com/SLongofono/448_Project1/blob/master/app/static/js/year.js">year.js Javascript documentation</a>
 #
