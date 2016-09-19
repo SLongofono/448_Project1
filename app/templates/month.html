@@ -25,6 +25,7 @@
 		<button class='btn' type="button" id="year">Year View</button>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="/static/js/month.js"></script>
 <script>
 
 // Setup Display
@@ -57,6 +58,8 @@ for(var i = 0; i <allWeeks.length; i++){
 	// Generate a set of buttons
 	this_week = generate_week_btns(allWeeks[i]);
 
+	console.log(this_week);
+
 	// Append the buttons
 	$(name).append(this_week);
 }
@@ -68,6 +71,7 @@ if(month != 'january' || year != '2016'){
 	for(var i = 0; i<trim_front; i++){
 		var selector = 'button:nth-child(' + (i+1) + ')';
 		firstWeek.find(selector).css('visibility', 'hidden');
+		console.log('Deleting ' + names[i]);
 	}
 }
 
@@ -78,128 +82,6 @@ if(month != 'december' || year != '2017'){
 		var selector = 'button:nth-child(' + (i+1) + ')';
 		lastWeek.find(selector).css('visibility', 'hidden');
 	}
-}
-
-
-function generate_week_btns(week){
-	var prefix = "<button class='btn_month' type='button' id="
-	var suffix = "</button>"
-	result = Array();
-	if (week.length < 7){
-		// Case beginning of month short week
-		var offset = 7 - week.length;
-		if(week[0] < 15){
-			for(var i = 0; i<week.length; i++){
-				result.push( prefix + week[i] + ">" + names[i+offset] + '<br>' + week[i] + suffix);
-			}
-		}
-		// Case end of month week
-		else{
-			for(var i = 0; i<week.length; i++){
-				result.push( prefix + week[i] + ">" + names[7-week.length + i] + '<br>' + week[i] + suffix);
-			}
-		}
-	}
-	else{
-		for(var i = 0; i<week.length; i++){
-			result.push( prefix + week[i] + ">" + names[i] + '<br>' + week[i] + suffix );
-		}
-	}
-	return result;
-};
-
-
-// Button handler for views
-$(function(){
-	$('#viewChange').find('*').click(function(){
-		var payload = 'view=' + $(this).attr("id");
-		$.ajax({
-			url: 	 '/viewChange',
-			data:    payload,
-			type: 	 'POST',
-			success: function(reply){
-				// Once the server has confirmed a change, redirect
-				// Parse the JSON into an object
-				payload = JSON.parse(reply);
-				if (payload.status == 'OK'){
-					console.log("Changed view successfully");
-					// redirect, cueing the server to display the updated view
-					window.location.replace(payload.link);
-					//window.location.replace("http://localhost:5000/");
-				}
-				else{
-					console.log('Bad status: ');
-					console.log(payload);
-				}
-			}
-		});// End ajax
-	});
-});
-
-
-// Button handler for month buttons
-$(function(){
-	$('.btn_month').click(function(){
-		var payload = serialize(['day', 'month', 'year'], [$(this).attr('id'), (months.indexOf('{{month}}')+1), year]);
-		console.log(payload);
-		$.ajax({
-			url: 	 '/changeFocusDay',
-			data:    payload,
-			type: 	 'POST',
-			success: function(reply){
-				// Once the server has confirmed a change, redirect
-				// Parse the JSON into an object
-				payload = JSON.parse(reply);
-				if (payload.status == 'OK'){
-					// redirect, cueing the server to display the updated view
-					window.location.replace(payload.link);
-					//window.location.replace("http://localhost:5000/");
-				}
-				else{
-					console.log('Bad status: ');
-					console.log(payload);
-				}
-			}
-		});// End ajax
-	});
-});
-
-
-function failMessage(msg){
-	$('#comsField').css('color', 'red');
-	$('#comsField').text(msg);
-}
-
-
-// This function was taken from a stackexchange post, which is kind of
-// ridiculous considering JavaScript is a web language.  It should be built in..
-// Retrieved September 2016
-// http://stackoverflow.com/questions/16171320/remove-all-slashes-in-javascript#16171353
-function sanitize(word){
-	console.log(word);
-	result = word.replace(/\\/g, '');
-	result = result.replace(/\/\//g, '');
-	result = result.replace(/\&/g, '');
-	result = result.replace(/%/g, '');
-	result = result.replace(/\$/g, '');
-	result = result.replace(/#/g, '');
-	console.log(result);
-	return result;
-}
-
-function serialize(names,vals){
-	equals = '=';
-	delimiter = '&';
-	result = Array();
-	for(var i = 0; i < vals.length; i++){
-		result.push(names[i] + equals + vals[i])
-	}
-	return result.join(delimiter)
-}
-
-function successMessage(msg){
-	$('#comsField').css('color', 'green');
-	$('#comsField').text(msg);
 }
 
 </script>
