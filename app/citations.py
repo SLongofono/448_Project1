@@ -5,14 +5,14 @@
 # @section Citations
 #
 #
-# @subsection one Leap year algorithm
+# @subsection one Leap Year Algorithm
 #
 # An algorithm to determine if it is a leap year, adapted from the
 # logic shown in this wikipedia page:
 # Accessed September, 2016,
 # https://en.wikipedia.org/wiki/Leap_year#Algorithm
 #
-# @subsection two Day of the week algorithm
+# @subsection two Day of the Week Algorithm
 #
 # An algorithm to determine the day of the week of the first day
 # of the year, adapted from the algortihm on the "disparate variation"
@@ -70,4 +70,13 @@
 #
 # Accessed September 2016,
 # https://stackoverflow.com/questions/16171320/remove-all-slashes-in-javascript#16171353
+#
+# @subsection eight Calendar Images
+#
+# The calendar images in the year view were taken from the website
+# calendarpedia, under template 8
+#
+# Accessed September 2016,
+# http://www.calendarpedia.com/2016-calendar-pdf-templates.html
+# http://www.calendarpedia.com/2017-calendar-pdf-templates.html
 #
