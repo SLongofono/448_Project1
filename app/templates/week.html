@@ -2,15 +2,14 @@
 {% block mainBody %}
 	<!-- Verify that we have a calendar -->
 	{% if user %}
-	<h1>Welcome, {{user}}!</h1>
+	<h1 style="text-transform: uppercase;">{{month}} {{year}}</h1>
 	<p>
-		{{month}}, {{year}}, {{days}}
-		Week  details:<br>
 		<div id="daysDiv">
 			{%for day in days%}
-			<button class='btn'  style = "width: 200px" type = "button" id="Day"> {{day}} {{dayNames[loop.index-1]}} </button>
+			<button class='btn'  style = "width: 200px" type = "button" id="{{loop.index}}" value="{{day}}"> {{day}} {{dayNames[loop.index-1]}} </button>
 			<br>
 			{%endfor%}
+		<div>
 	</p>
 	{% else %}
 	<p>It appears that you aren't logged in.  Follow the link below to remedy that.</p>
@@ -21,87 +20,13 @@
 	<div class="container" id="viewChange">
 		<button class='btn' type="button" id="day">Day View</button>
 		<button class='btn' type="button" id="month">Month View</button>
-	  <button class='btn' type="button" id="year">Year View</button>
+	  	<button class='btn' type="button" id="year">Year View</button>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-
+<script src='/static/js/week.js'></script>
 <script>
-var weeks = {{weeks}};
-var days = {{days}};
-var dayNames = {{dayNames}};
-var shortweekDiv = $("#shortweek");
-var actualLength = 7 - days.length();
-for (i=0;i<=actualLength;i++)
-
-)
-// Button handler for views
-$(function(){
-	$('#viewChange').find('*').click(function(){
-		var payload = 'view=' + $(this).attr("id");
-		$.ajax({
-			url: 	 '/viewChange',
-			data:    payload,
-			type: 	 'POST',
-			success: function(reply){
-				// Once the server has confirmed a change, redirect
-				// Parse the JSON into an object
-				payload = JSON.parse(reply);
-				if (payload.status == 'OK'){
-					console.log("Changed view successfully");
-					// redirect, cueing the server to display the updated view
-					window.location.replace(payload.link);
-					//window.location.replace("http://localhost:5000/");
-				}
-				else{
-					console.log('Bad status:');
-					console.log(payload);
-				}
-			}
-		});// End ajax
-	});
-});
-
-
-function failMessage(msg){
-	$('#comsField').css('color', 'red');
-	$('#comsField').text(msg);
-}
-
-
-
-
-
-// This function was taken from a stackexchange post, which is kind of
-// ridiculous considering JavaScript is a web language.  It should be built in..
-// Retrieved September 2016
-// http://stackoverflow.com/questions/16171320/remove-all-slashes-in-javascript#16171353
-function sanitize(word){
-	console.log(word);
-	result = word.replace(/\\/g, '');
-	result = result.replace(/\/\//g, '');
-	result = result.replace(/\&/g, '');
-	result = result.replace(/%/g, '');
-	result = result.replace(/\$/g, '');
-	result = result.replace(/#/g, '');
-	console.log(result);
-	return result;
-}
-
-
-function serialize(names,vals){
-	equals = '=';
-	delimiter = '&';
-	result = Array();
-	for(var i = 0; i < vals.length; i++){
-		result.push(names[i] + equals + vals[i])
-	}
-	return result.join(delimiter)
-}
-
-function successMessage(msg){
-	$('#comsField').css('color', 'green');
-	$('#comsField').text(msg);
-}
-
+var month = '{{month}}';
+var year = '{{year}}';
+var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 </script>
 {% endblock %}

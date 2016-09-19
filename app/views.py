@@ -351,15 +351,24 @@ def changeFocusMonth():
 	try:
 		month = request.form['month']
 		year = int(request.form['year'])
+		app.logger.info(month)
+		app.logger.info(year)
+
 		calendar_obj.currentMonth = calendar_obj.getMonth(month, year)
-		calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[0]
-		calendar_obj.currentDay = calendar_obj.currentWeek[0]
+		app.logger.info('found month:')
+		app.logger.info(calendar_obj.currentMonth.name)
+
+		calendar_obj.currentWeek = calendar_obj.currentMonth.weeks[1]
+		calendar_obj.currentDay = calendar_obj.currentWeek[4]
 		if calendar_obj.currentMonth.year == calendar_obj.year1.name:
 			calendar_obj.currentYear = calendar_obj.year1
 		else:
 			calendar_obj.currentYear = calendar_obj.year2
 
+		app.logger.info(calendar_obj.getCurrentDay().date)
+		app.logger.info(calendar_obj.getCurrentWeek())
 		result = {'status':'OK', 'link':url_for('index', view='month')}
+		app.logger.info(result)
 
 		#return status and a link to redirect to
 		return json.dumps(result)

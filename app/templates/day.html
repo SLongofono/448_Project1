@@ -52,6 +52,7 @@
 	  <button class='btn' type="button" id="year">Year View</button>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="/static/js/day.js"></script>
 <script>
 // Maintain a count of details on this page
 var detailCount = {{details|length}};
@@ -71,7 +72,7 @@ currentDay.labels = ['day','date','month','year'];
 //Test fake JSON form
 console.log(serialize(currentDay.labels, currentDay.stats));
 </script>
-<script src="/static/js/day.js"></script>
+
 
 
 {% endblock %}

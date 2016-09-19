@@ -9,37 +9,38 @@
 		Year details:<br>
 
 	</p>
+<div id="monthsDiv">
+		<button class="btn" type="button" data="2016" id="january"><img src="/static/img/1 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="february"><img src="/static/img/2 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="march"><img src="/static/img/3 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="april"><img src="/static/img/4 2016.png"/></button> &nbsp;
 
-	<button class="btn" type="button" id="August"><img src="/static/img/1 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/2 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/3 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/4 2016.png"/></button> &nbsp;
+		<button class="btn" type="button" data="2017" id="january"><img src="/static/img/1 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="february"><img src="/static/img/2 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="march"><img src="/static/img/3 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="april"><img src="/static/img/4 2017.png"/></button>
+		<br>
+		<button class="btn" type="button" data="2016" id="may"><img src="/static/img/5 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="june"><img src="/static/img/6 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="july"><img src="/static/img/7 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="august"><img src="/static/img/8 2016.png"/></button> &nbsp;
 
-	<button class="btn" type="button" id="August"><img src="/static/img/1 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/2 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/3 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/4 2017.png"/></button>
-<br>
-	<button class="btn" type="button" id="August"><img src="/static/img/5 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/6 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/7 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/8 2016.png"/></button> &nbsp;
+		<button class="btn" type="button" data="2017" id="may"><img src="/static/img/5 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="june"><img src="/static/img/6 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="july"><img src="/static/img/7 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="august"><img src="/static/img/8 2017.png"/></button>
+		<br>
+		<button class="btn" type="button" data="2016" id="september"><img src="/static/img/9 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="october"><img src="/static/img/10 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="november"><img src="/static/img/11 2016.png"/></button>
+		<button class="btn" type="button" data="2016" id="december"><img src="/static/img/12 2016.png"/></button> &nbsp;
 
-	<button class="btn" type="button" id="August"><img src="/static/img/5 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/6 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/7 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/8 2017.png"/></button>
-<br>
-	<button class="btn" type="button" id="August"><img src="/static/img/9 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/10 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/11 2016.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/12 2016.png"/></button> &nbsp;
-
-	<button class="btn" type="button" id="August"><img src="/static/img/9 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/10 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/11 2017.png"/></button>
-	<button class="btn" type="button" id="August"><img src="/static/img/12 2017.png"/></button>
-	<br>
+		<button class="btn" type="button" data="2017" id="september"><img src="/static/img/9 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="october"><img src="/static/img/10 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="november"><img src="/static/img/11 2017.png"/></button>
+		<button class="btn" type="button" data="2017" id="december"><img src="/static/img/12 2017.png"/></button>
+		<br>
+</div>
 	<style>
 	.btn{
 		height:100px;
@@ -63,74 +64,5 @@
 		<button class='btn' type="button" id="month">Month View</button>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-<script>
-
-
-// Button handler for views
-$(function(){
-	$('#viewChange').find('*').click(function(){
-		var payload = 'view=' + $(this).attr("id");
-		$.ajax({
-			url: 	 '/viewChange',
-			data:    payload,
-			type: 	 'POST',
-			success: function(reply){
-				// Once the server has confirmed a change, redirect
-				// Parse the JSON into an object
-				payload = JSON.parse(reply);
-				if (payload.status == 'OK'){
-					console.log("Changed view successfully");
-					// redirect, cueing the server to display the updated view
-					window.location.replace(payload.link);
-					//window.location.replace("http://localhost:5000/");
-				}
-				else{
-					console.log('Bad status: ');
-					console.log(payload);
-				}
-			}
-		});// End ajax
-	});
-});
-
-
-function failMessage(msg){
-	$('#comsField').css('color', 'red');
-	$('#comsField').text(msg);
-}
-
-
-// This function was taken from a stackexchange post, which is kind of
-// ridiculous considering JavaScript is a web language.  It should be built in..
-// Retrieved September 2016
-// http://stackoverflow.com/questions/16171320/remove-all-slashes-in-javascript#16171353
-function sanitize(word){
-	console.log(word);
-	result = word.replace(/\\/g, '');
-	result = result.replace(/\/\//g, '');
-	result = result.replace(/\&/g, '');
-	result = result.replace(/%/g, '');
-	result = result.replace(/\$/g, '');
-	result = result.replace(/#/g, '');
-	console.log(result);
-	return result;
-}
-
-
-function serialize(names,vals){
-	equals = '=';
-	delimiter = '&';
-	result = Array();
-	for(var i = 0; i < vals.length; i++){
-		result.push(names[i] + equals + vals[i])
-	}
-	return result.join(delimiter)
-}
-
-function successMessage(msg){
-	$('#comsField').css('color', 'green');
-	$('#comsField').text(msg);
-}
-
-</script>
+<script src='/static/js/year.js'></script>
 {% endblock %}
