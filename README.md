@@ -43,3 +43,7 @@ Instructions:
   7. Start the server: from the directory which contains the 'app' folder, type './run.py'
   8. Open a browser and navigate to 'http://localhost:5000/'.  Your username and password
      should match what you put in the config.py file.
+
+Notes:
+	Every time the app is used, start the virtual environment again before starting the server.
+	This project was developed and tested on Fedora 24 using Google Chrome. YMMV on other setups.
